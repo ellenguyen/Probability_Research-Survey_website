@@ -6,10 +6,21 @@
         <form class="frm" action="/" method="post">
             <input autocompleta="off" autofocus name="name" placeholder="First Name" type="text" onkeydown="return /[a-z]/i.test(event.key)"/>
             <br><br>
+
             <input autocompleta="off" autofocus name="name" placeholder="Last Name" type="text" onkeydown="return /[a-z]/i.test(event.key)"/>
             <br><br>
-            <input autocompleta="off" autofocus name="name" placeholder="University" type="text" onkeydown="return /[a-z]/i.test(event.key)"/>
+
+
+            <select id="university-dropdown">
+                <option value="" disabled selected>Select an option</option>
+                {% for university in universities %}
+                    <option value="{{ university }}">{{ university }}</option>
+                {% endfor %}
+            </select>
+
             <br><br>
+
+
             <input autocompleta="off" autofocus name="name" placeholder="ID" type="number">
             <br><br>
         </form>
