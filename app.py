@@ -7,7 +7,7 @@ def index():
     if request.method == "GET":
         return render_template("index.html")
     elif request.method == "POST":
-        return render_template("question.html", name=request.form.get("name", "world"))
+        return render_template("success.html")
 
     
 
