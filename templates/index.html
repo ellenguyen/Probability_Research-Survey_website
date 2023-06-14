@@ -4,16 +4,25 @@
 
     <div class="blanks">
         <form class="frm" action="/" method="post">
-            <input autocompleta="off" autofocus name="name" placeholder="First Name" type=""text>
-            <input autocompleta="off" autofocus name="name" placeholder="Last Name" type=""text>
-            <input autocompleta="off" autofocus name="name" placeholder="University" type=""text>
-            <input autocompleta="off" autofocus name="name" placeholder="ID" type=""text>
+            <input autocompleta="off" autofocus name="name" placeholder="First Name" type="text" onkeydown="return /[a-z]/i.test(event.key)"/>
+            <br><br>
+            <input autocompleta="off" autofocus name="name" placeholder="Last Name" type="text" onkeydown="return /[a-z]/i.test(event.key)"/>
+            <br><br>
+            <input autocompleta="off" autofocus name="name" placeholder="University" type="text" onkeydown="return /[a-z]/i.test(event.key)"/>
+            <br><br>
+            <input autocompleta="off" autofocus name="name" placeholder="ID" type="number">
+            <br><br>
         </form>
-    </div>
 
-    <form action="/" method="post">
-        <input type="submit">
-    </form>
+    </div>
+    
+    <div class="button">
+        <form action="/" method="post">
+            <input type="submit" >
+        </form>
+
+    </div>
+    
 
 
 {% endblock %}

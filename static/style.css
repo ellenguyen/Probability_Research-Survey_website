@@ -1,13 +1,9 @@
 .blanks{
-    line-height: 400px;
-    text-align:center; 
-    vertical-align:middle;
-
-   
+    margin-left: 10px;
+    display: flex;
+    justify-content: start;
 
 }
-.frm{
-    display: inline-block;
-    vertical-align: middle;
-    line-height: 14px; 
+.button{
+    margin-left: 10px;
 }
