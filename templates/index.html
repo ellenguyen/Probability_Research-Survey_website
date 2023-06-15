@@ -1,6 +1,7 @@
 {% extends "homeLayout.html" %}
 
 {% block body %}
+    <h1>Experiment</h1>
 
     <div class="blanks">
         <form class="frm" action="/" method="post">
@@ -23,9 +24,20 @@
 
             <input autocompleta="off" autofocus name="name" placeholder="ID" type="number">
             <br><br>
+
         </form>
 
     </div>
+
+    <div class="questions">
+        <label>Lottery</label>
+        <input type="radio" name="answer">
+
+        <label>Cash</label>
+        <input type="radio" name="answer" checked>
+
+    </div>
+    <br>
 
     <div class="button">
         <form action="/" method="post">
