@@ -3,10 +3,10 @@ from flask import Flask, render_template ,request
 app = Flask(__name__)
 
 #universities
-universities = [
-        "Harvard University",
-        "Stanford University",
-        "Massachusetts Institute of Technology (MIT)",
+classes = [
+        "CIS 1001",
+        "STAT 1001",
+        "MATH 1001",
     ]
 
 
@@ -14,7 +14,7 @@ universities = [
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "GET":
-        return render_template("index.html",universities=universities)
+        return render_template("index.html",classes=classes)
 
     elif request.method == "POST":
         return render_template("success.html")
