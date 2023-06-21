@@ -11,24 +11,24 @@
 
                         <!-- First & last name only accepting letters -->
                         <label for="first-name" >First Name:</label><br>
-                        <input autocomplete="off" autofocus id="first-name" name="first_name" placeholder="Enter your first name" type="text" class="input-field" onkeydown="return /[a-z]/i.test(event.key)"/><br>
+                        <input autocomplete="off" autofocus id="first-name" name="first_name" placeholder="Enter your first name" type="text" class="input-field" onkeydown="return /[a-z]/i.test(event.key)" required /><br>
                     </div>
 
                     <div class="input-group">
                         <label for="last-name">Last Name:</label><br>
-                        <input autocomplete="off" autofocus id="last-name" name="last_name" placeholder="Enter your last name" type="text" class="input-field" onkeydown="return /[a-z]/i.test(event.key)"/><br>
+                        <input autocomplete="off" autofocus id="last-name" name="last_name" placeholder="Enter your last name" type="text" class="input-field" onkeydown="return /[a-z]/i.test(event.key)" required /><br>
                     </div>
 
                     <div class="input-group">
 
                         <!-- Student ID only accepting numbers -->
                         <label for="student-id">Student ID:</label><br>
-                        <input autocomplete="off" autofocus id="student-id" name="student_id" placeholder="Enter your student ID" type="text" class="input-field" onkeypress="return /[0-9]/i.test(event.key)"/><br>
+                        <input autocomplete="off" autofocus id="student-id" name="student_id" placeholder="Enter your student ID" type="text" class="input-field" onkeypress="return /[0-9]/i.test(event.key)" required /><br>
                     </div>
 
                     <div class="input-group">
                         <label for="class-dropdown">Class:</label><br>
-                        <select id="class-dropdown" class="input-field" name="class">
+                        <select id="class-dropdown" class="input-field" name="class" required>
                             <option value="" disabled selected>Select your class</option>
 
                             <!-- will add more classes later on -->
@@ -42,7 +42,7 @@
 
                         <!-- Instructor name only accepting letters -->
                         <label for="instructor">Instructor:</label><br>
-                        <input autocomplete="off" autofocus id="instructor" name="instructor" placeholder="Enter your instructor's name" type="text" class="input-field" onkeydown="return /[a-z]/i.test(event.key)"/><br>
+                        <input autocomplete="off" autofocus id="instructor" name="instructor" placeholder="Enter your instructor's name" type="text" class="input-field" onkeydown="return /[a-z]/i.test(event.key)" required /><br>
                     </div>
 
                     <div class="input-group">
@@ -50,12 +50,12 @@
 
                         <!-- Major only accepting letters -->
                         <!-- or do drop down boxes -->
-                        <input autocomplete="off" autofocus id="major" name="major" placeholder="Enter your major" type="text" class="input-field" onkeydown="return /[a-z]/i.test(event.key)"/><br>
+                        <input autocomplete="off" autofocus id="major" name="major" placeholder="Enter your major" type="text" class="input-field" onkeydown="return /[a-z]/i.test(event.key)" required /><br>
                     </div>
 
                     <div class="input-group">
                         <label for="university-year">University Year:</label><br>
-                        <select id="university-year" class="input-field" name="university_year">
+                        <select id="university-year" class="input-field" name="university_year" required >
                             <option value="" disabled selected>Select your university year</option>
                             <option value="Freshman">Freshman</option>
                             <option value="Sophomore">Sophomore</option>
@@ -68,7 +68,7 @@
                         <label>Have you studied statistics before?</label><br>
                         <div class="radio-group">
                             <label>
-                                <input type="radio" name="statistics" value="Yes">
+                                <input type="radio" name="statistics" value="Yes" required>
                                 Yes
                             </label>
 
