@@ -8,18 +8,18 @@
             <div class="form-container">
                 <form action="/" method="post">
                     <div class="input-group">
-                        <label for="first-name">First Name:</label><br>
-                        <input autocomplete="off" autofocus id="first-name" name="first_name" placeholder="Enter your first name" type="text" class="input-field" /><br>
+                        <label for="first-name" >First Name:</label><br>
+                        <input autocomplete="off" autofocus id="first-name" name="first_name" placeholder="Enter your first name" type="text" class="input-field" onkeydown="return /[a-z]/i.test(event.key)"/><br>
                     </div>
 
                     <div class="input-group">
                         <label for="last-name">Last Name:</label><br>
-                        <input autocomplete="off" autofocus id="last-name" name="last_name" placeholder="Enter your last name" type="text" class="input-field" /><br>
+                        <input autocomplete="off" autofocus id="last-name" name="last_name" placeholder="Enter your last name" type="text" class="input-field" onkeydown="return /[a-z]/i.test(event.key)"/><br>
                     </div>
 
                     <div class="input-group">
                         <label for="student-id">Student ID:</label><br>
-                        <input autocomplete="off" autofocus id="student-id" name="student_id" placeholder="Enter your student ID" type="text" class="input-field" /><br>
+                        <input autocomplete="off" autofocus id="student-id" name="student_id" placeholder="Enter your student ID" type="text" class="input-field" onkeypress="return /[0-9]/i.test(event.key)"/><br>
                     </div>
 
                     <div class="input-group">
