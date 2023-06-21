@@ -1,50 +1,80 @@
 {% extends "homeLayout.html" %}
 
 {% block body %}
-    <h1>Experiment</h1>
+    <center>
+        <div class="container">
+            <h1 class="title">Welcome to our research in Department of Risk, Actuarial, and Legal Studies</h1>
 
-    <div class="blanks">
-        <form class="frm" action="/" method="post">
-            <input autocompleta="off" autofocus name="name" placeholder="First Name" type="text" onkeydown="return /[a-z]/i.test(event.key)"/>
-            <br><br>
+            <div class="form-container">
+                <form action="/" method="post">
+                    <div class="input-group">
+                        <label for="first-name">First Name:</label><br>
+                        <input autocomplete="off" autofocus id="first-name" name="first_name" placeholder="Enter your first name" type="text" class="input-field" /><br>
+                    </div>
 
-            <input autocompleta="off" autofocus name="name" placeholder="Last Name" type="text" onkeydown="return /[a-z]/i.test(event.key)"/>
-            <br><br>
+                    <div class="input-group">
+                        <label for="last-name">Last Name:</label><br>
+                        <input autocomplete="off" autofocus id="last-name" name="last_name" placeholder="Enter your last name" type="text" class="input-field" /><br>
+                    </div>
 
+                    <div class="input-group">
+                        <label for="student-id">Student ID:</label><br>
+                        <input autocomplete="off" autofocus id="student-id" name="student_id" placeholder="Enter your student ID" type="text" class="input-field" /><br>
+                    </div>
 
-            <select id="class-dropdown">
-                <option value="" disabled selected>Select an option</option>
-                {% for Class in classes %}
-                    <option value="{{ Class }}">{{ Class }}</option>
-                {% endfor %}
-            </select>
+                    <div class="input-group">
+                        <label for="class-dropdown">Class:</label><br>
+                        <select id="class-dropdown" class="input-field" name="class">
+                            <option value="" disabled selected>Select your class</option>
+                            {% for Class in classes %}
+                                <option value="{{ Class }}">{{ Class }}</option>
+                            {% endfor %}
+                        </select><br>
+                    </div>
 
-            <br><br>
+                    <div class="input-group">
+                        <label for="instructor">Instructor:</label><br>
+                        <input autocomplete="off" autofocus id="instructor" name="instructor" placeholder="Enter your instructor's name" type="text" class="input-field" /><br>
+                    </div>
 
+                    <div class="input-group">
+                        <label for="major">Major:</label><br>
+                        <input autocomplete="off" autofocus id="major" name="major" placeholder="Enter your major" type="text" class="input-field" /><br>
+                    </div>
 
-            <input autocompleta="off" autofocus name="name" placeholder="ID" type="number">
-            <br><br>
+                    <div class="input-group">
+                        <label for="university-year">University Year:</label><br>
+                        <select id="university-year" class="input-field" name="university_year">
+                            <option value="" disabled selected>Select your university year</option>
+                            <option value="Freshman">Freshman</option>
+                            <option value="Sophomore">Sophomore</option>
+                            <option value="Junior">Junior</option>
+                            <option value="Senior">Senior</option>
+                        </select><br>
+                    </div>
 
-        </form>
+                    <div class="input-group">
+                        <label>Have you studied statistics before?</label><br>
+                        <div class="radio-group">
+                            <label>
+                                <input type="radio" name="statistics" value="Yes">
+                                Yes
+                            </label>
 
-    </div>
+                            <label>
+                                <input type="radio" name="statistics" value="No">
+                                No
+                            </label>
+                        </div><br>
+                    </div>
 
-    <div class="questions">
-        <label>Lottery</label>
-        <input type="radio" name="answer">
+                    <!-- Center aligned the Submit button -->
+                    <div class="submit-button" style="text-align: center;">
+                        <button type="submit" class="submit-button" style="margin-left: auto; margin-right: auto;">Submit</button>
+                    </div>
 
-        <label>Cash</label>
-        <input type="radio" name="answer" checked>
-
-    </div>
-    <br>
-
-    <div class="button">
-        <form action="/" method="post">
-            <button type="submit">Submit</button>
-        </form>
-    </div>
-    
-
-
+                </form>
+            </div>
+        </div>
+    </center>
 {% endblock %}

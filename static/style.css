@@ -1,3 +1,4 @@
+/*
 .blanks{
     margin-left: 10px;
     display: flex;
@@ -10,4 +11,52 @@
 
 .questions{
     margin-left: 10px;
+}
+*/
+
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Set height to viewport height */
+}
+
+.form-container {
+    text-align: left;
+}
+
+.input-group {
+    margin-bottom: 10px;
+}
+
+.submit-button {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.title {
+    text-align: center; /* Center align the "Welcome" tag */
+}
+
+/* Increase text size */
+label,
+input,
+select {
+    font-size: 18px;
+}
+
+/* Increase text box size and layout */
+.input-field {
+    width: 300px;
+    height: 40px;
+    border-radius: 5px; /* Add rounded corners */
+    border: 1px solid #ccc; /* Add border */
+    padding: 5px; /* Add padding */
 }
