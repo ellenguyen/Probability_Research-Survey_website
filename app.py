@@ -18,6 +18,9 @@ def index():
 
     elif request.method == "POST":
         return render_template("success.html")
+    
+# #new route
+# @app.route("/firstQuestion")
 
     
 

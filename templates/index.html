@@ -34,12 +34,12 @@
 
                     <div class="input-group">
                         <label for="instructor">Instructor:</label><br>
-                        <input autocomplete="off" autofocus id="instructor" name="instructor" placeholder="Enter your instructor's name" type="text" class="input-field" /><br>
+                        <input autocomplete="off" autofocus id="instructor" name="instructor" placeholder="Enter your instructor's name" type="text" class="input-field" onkeydown="return /[a-z]/i.test(event.key)"/><br>
                     </div>
 
                     <div class="input-group">
                         <label for="major">Major:</label><br>
-                        <input autocomplete="off" autofocus id="major" name="major" placeholder="Enter your major" type="text" class="input-field" /><br>
+                        <input autocomplete="off" autofocus id="major" name="major" placeholder="Enter your major" type="text" class="input-field" onkeydown="return /[a-z]/i.test(event.key)"/><br>
                     </div>
 
                     <div class="input-group">
