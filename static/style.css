@@ -60,3 +60,11 @@ select {
     border: 1px solid #ccc; /* Add border */
     padding: 5px; /* Add padding */
 }
+
+/* red asterik */
+
+.red-asterik::after{
+    content:" *";
+    color: red;
+
+}

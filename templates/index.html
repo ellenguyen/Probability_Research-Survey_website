@@ -10,24 +10,24 @@
                     <div class="input-group">
 
                         <!-- First & last name only accepting letters -->
-                        <label for="first-name" >First Name:</label><br>
+                        <label for="first-name" class="red-asterik">First Name:</label><br>
                         <input autocomplete="off" autofocus id="first-name" name="first_name" placeholder="Enter your first name" type="text" class="input-field" onkeydown="return /[a-z]/i.test(event.key)" required /><br>
                     </div>
 
                     <div class="input-group">
-                        <label for="last-name">Last Name:</label><br>
+                        <label for="last-name" class="red-asterik">Last Name:</label><br>
                         <input autocomplete="off" autofocus id="last-name" name="last_name" placeholder="Enter your last name" type="text" class="input-field" onkeydown="return /[a-z]/i.test(event.key)" required /><br>
                     </div>
 
                     <div class="input-group">
 
                         <!-- Student ID only accepting numbers -->
-                        <label for="student-id">Student ID:</label><br>
+                        <label for="student-id" class="red-asterik">Student ID:</label><br>
                         <input autocomplete="off" autofocus id="student-id" name="student_id" placeholder="Enter your student ID" type="text" class="input-field" onkeypress="return /[0-9]/i.test(event.key)" required /><br>
                     </div>
 
                     <div class="input-group">
-                        <label for="class-dropdown">Class:</label><br>
+                        <label for="class-dropdown" class="red-asterik">Class:</label><br>
                         <select id="class-dropdown" class="input-field" name="class" required>
                             <option value="" disabled selected>Select your class</option>
 
@@ -41,12 +41,12 @@
                     <div class="input-group">
 
                         <!-- Instructor name only accepting letters -->
-                        <label for="instructor">Instructor:</label><br>
+                        <label for="instructor" class="red-asterik">Instructor:</label><br>
                         <input autocomplete="off" autofocus id="instructor" name="instructor" placeholder="Enter your instructor's name" type="text" class="input-field" onkeydown="return /[a-z]/i.test(event.key)" required /><br>
                     </div>
 
-                    <div class="input-group">
-                        <label for="major">Major:</label><br>
+                    <div class="input-group" class="red-asterik">
+                        <label for="major" class="red-asterik">Major:</label><br>
 
                         <!-- Major only accepting letters -->
                         <!-- or do drop down boxes -->
@@ -54,7 +54,7 @@
                     </div>
 
                     <div class="input-group">
-                        <label for="university-year">University Year:</label><br>
+                        <label for="university-year" class="red-asterik">University Year:</label><br>
                         <select id="university-year" class="input-field" name="university_year" required >
                             <option value="" disabled selected>Select your university year</option>
                             <option value="Freshman">Freshman</option>
