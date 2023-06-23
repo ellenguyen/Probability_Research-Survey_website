@@ -1,15 +1,17 @@
-from flask import Flask, render_template ,request 
+# import libraries to redirect to different page layouts
+from flask import Flask, render_template, request, redirect, url_for
+
+# library to randomly redirect users
+import random
 
 app = Flask(__name__)
 
-#universities
+# more classes added upon instructions
 classes = [
         "CIS 1001",
         "STAT 1001",
         "MATH 1001",
     ]
-
-
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -17,12 +19,23 @@ def index():
         return render_template("index.html",classes=classes)
 
     elif request.method == "POST":
-        return render_template("questions.html")
-    
-# #new route
-# @app.route("/firstQuestion")
+        # generate a random number between 0 and 1
+        random_number = random.random()
 
-    
+        if random_number < 0.5:
+            # redirect to plain text HTML page
+            return redirect(url_for("plain_text"))
+        else:
+            # Redirect to visualization HTML page
+            return redirect(url_for("visualization"))
+
+@app.route("/plain_text")
+def plain_text():
+    return render_template("plain_text.html")
+
+@app.route("/visualization")
+def visualization():
+    return render_template("visualization.html")
 
 if __name__ == '__main__':
     #so that it keep refresing
