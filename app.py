@@ -23,11 +23,11 @@ def index():
         random_number = random.random()
 
         if random_number < 0.5:
-            # redirect to plain text HTML page
-            return redirect(url_for("plain_text"))
+            # run plain_text
+            return render_template("plain_text.html",classes=classes)
         else:
-            # Redirect to visualization HTML page
-            return redirect(url_for("visualization"))
+            # run visualization
+            return render_template("visualization.html",classes=classes)
 
 @app.route("/plain_text")
 def plain_text():
