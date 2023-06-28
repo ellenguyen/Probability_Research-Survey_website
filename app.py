@@ -24,10 +24,10 @@ def index():
 
         if random_number < 0.5:
             # run plain_text
-            return render_template("plain_text.html",classes=classes)
+            return render_template("/plain_text/plain_text.html",classes=classes)
         else:
             # run visualization
-            return render_template("visualization.html",classes=classes)
+            return render_template("/visualization/visualization.html",classes=classes)
 
 @app.route("/plain_text")
 def plain_text():
