@@ -1,19 +1,4 @@
-/*
-.blanks{
-    margin-left: 10px;
-    display: flex;
-    justify-content: start;
-
-}
-.button{
-    margin-left: 10px;
-}
-
-.questions{
-    margin-left: 10px;
-}
-*/
-
+/* First page - Form submission */
 body, html {
     height: 100%;
     margin: 0;
@@ -62,7 +47,6 @@ select {
 }
 
 /* red asterik */
-
 .red-asterik::after{
     content:" *";
     color: red;
