@@ -22,7 +22,7 @@ def index():
         # generate a random number between 0 and 1
         random_number = random.random()
 
-        if random_number < 0.5:
+        if random_number < 0.9:
             # run plain_text
             return render_template("/plain_text/plain_text.html",classes=classes)
         else:
