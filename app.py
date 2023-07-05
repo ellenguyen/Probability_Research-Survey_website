@@ -1,7 +1,9 @@
 # import libraries to redirect to different page layouts
 from flask import Flask, render_template, request, redirect, url_for
 
+#install pip install Flask psycopg2-binary
 import psycopg2
+#install pip install pyyaml
 import yaml
 
 # library to randomly redirect users
@@ -31,6 +33,26 @@ def index():
         return render_template("index.html",classes=classes)
 
     elif request.method == "POST":
+        #asking the request from the user 
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
+        student_id = request.form['student_id']
+        class_taking = request.form['class']
+        instructor = request.form['instructor']
+        major = request.form['major']
+        university_year = request.form['university_year']
+        statistics = request.form['statistics']
+
+        #creating a cursor to use DATABASE operations
+        cur = conn.cursor()
+        #insert the data into the database
+
+        cur.execute('''INSERT INTO ['table_name'] (first_name, last_name,student_id,class_taking, instructor, major, university_year, statistics) VALUES(%s, %s)''', (first_name, last_name,student_id,class_taking, instructor, major, university_year, statistics))
+        # conn.commit()
+        # cur.close()
+        # conn.close()
+
+
         # generate a random number between 0 and 1
         random_number = random.random()
 
