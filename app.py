@@ -1,6 +1,9 @@
 # import libraries to redirect to different page layouts
 from flask import Flask, render_template, request, redirect, url_for
 
+import psycopg2
+import yaml
+
 # library to randomly redirect users
 import random
 
@@ -12,6 +15,15 @@ classes = [
         "STAT 1001",
         "MATH 1001",
     ]
+#connect DATABSE
+db = yaml.safe_load(open('db.yaml'))
+conn = psycopg2.connect(
+        host= db['postgres_host'],
+        database= db["postgres_db"],
+        user= db["postgres_user"],
+        password= db['postgres_password'])
+
+
 
 @app.route("/", methods=["GET", "POST"])
 def index():
