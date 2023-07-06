@@ -5,20 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="../../static/plain_text.css" />
+    <script src="../../static/script.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1></h1>
-        <div class="box" id="box1">
-            <h2>$<span id="value1">100</span></h2>
-            <button onclick="decreaseValue()">Choose</button>
-        </div>
-        <div class="box" id="box2">
-            <h2>$<span id="value2">25</span></h2>
-            <button onclick="increaseValue()">Choose</button>
-        </div>
-    </div>
+    <div id="tables-container"></div>
 
-    <script src="../../static/script.js"></script>
+    <table id="round1-table">
+      <thead>
+        <tr>
+          <th>Round 1</th>
+          <th>Cash Amount</th>
+          <th>User Input</th>
+        </tr>
+      </thead>
+      <tbody id="round1-table-body">
+      </tbody>
+    </table>
 </body>
 </html>
