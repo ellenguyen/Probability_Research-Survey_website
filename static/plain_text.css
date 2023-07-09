@@ -10,9 +10,15 @@ th, td {
   border-bottom: 1px solid #ddd;
 }
 
+.header{
+  display: flex;
+  justify-content: center;
+  color: rgb(149, 113, 36);
+}
+
 .lottery-cell {
   font-weight: bold;
-  color: blue;
+  color: rgb(91, 91, 208);
 }
 
 .invalid-input {
@@ -21,4 +27,8 @@ th, td {
 
 #tables-container {
   margin-top: 20px;
+}
+
+#user-input{
+  padding-right: 100px;
 }
