@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-  const cashAmounts = [30, 50, 70, 90, 100, 120, 140, 160, 180, 200];
+  const cashAmounts = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
   //const cashAmountsRound2 = [120, 122, 124, 126, 128, 130, 132, 134, 136, 138, 140];
 
   //creating the user choice for CASH or LOTTERY
