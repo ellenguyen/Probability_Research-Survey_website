@@ -39,7 +39,8 @@ th, td {
 }
 
 .button{
-  margin-top: 250px;
+  padding-top: 20px;
   display: flex;
-  margin: auto;
+  justify-content: center;
+
 }

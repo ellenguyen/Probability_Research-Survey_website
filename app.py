@@ -71,6 +71,10 @@ def plain_text():
 def visualization():
     return render_template("visualization.html")
 
+@app.route("/success", methods=['POST'])
+def success():
+    return render_template("success.html")
+
 if __name__ == '__main__':
     #so that it keep refresing
     app.run(debug=True)
