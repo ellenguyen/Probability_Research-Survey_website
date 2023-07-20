@@ -71,7 +71,7 @@ def plain_text():
 def visualization():
     return render_template("visualization.html")
 
-@app.route("/success", methods=['POST'])
+@app.route("/success")
 def success():
     return render_template("success.html")
 
