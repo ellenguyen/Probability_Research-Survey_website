@@ -10,11 +10,11 @@
 </head>
 <body>
     <div>
-        <h1>Lottery: "75% of $50 25% of $5"</h1>
+        <h1>Lottery: "5% of $50 95% of $5"</h1>
     </div>
 
     <div id="big">
-        <form action="/users_first_choice" method="post">
+        <form action="/users_first_choice" method="post" id="lotteryForm">
             <div class="table">
 
                 <div class="thead">
@@ -31,12 +31,10 @@
 
             </div>
 
-            <div class="submit-button" style="text-align: center;" action="/users_first_choice">
+            <div class="submit-button" id="submit-button" style="text-align: center;" action="/users_first_choice">
                 <button type="submit" class="submit-button" style="margin-left: auto; margin-right: auto;">Submit</button>
              </div>
         </form>
     </div>
-
-        
 </body>
 </html>
