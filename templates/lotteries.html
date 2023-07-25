@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../../static/plain_text.css" />
-    <script src="../../static/script.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../static/lotteries.css" />
+    <script src="../static/lotteries.js"></script>
     <title>Document</title>
 </head>
 <body>
     <div>
-        <h1>Lottery: "5% of $50 95% of $5"</h1>
+        <h1 id="lottery-name">Lottery: "5% of $50 95% of $5"</h1>
     </div>
 
     <div id="big">
-        <form action="/users_first_choice" method="post" id="lotteryForm">
+        <form id="lotteryForm"> <!-- form submission event listener added in lotteries.js -->
             <div class="table">
 
                 <div class="thead">

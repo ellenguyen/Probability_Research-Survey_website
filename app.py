@@ -53,15 +53,9 @@ def index():
         # conn.close()
 
 
-        # generate a random number between 0 and 1
-        random_number = random.random()
-
-        if random_number < 0.5:
-            # run plain_text
-            return render_template("/plain_text/plain_text.html",classes=classes)
-        else:
-            # run visualization
-            return render_template("/visualization/visualization.html",classes=classes)
+        # 50% chance to enable visualization
+        visualization = random.random() < 0.5
+        return render_template("/lotteries.html", visualization=visualization)
 
 @app.route("/plain_text")
 def plain_text():
