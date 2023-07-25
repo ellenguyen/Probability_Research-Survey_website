@@ -6,36 +6,57 @@ function createLotteryRows(cashAmounts, choices, tableBodyId) {
     const divTr = document.createElement("div");
     divTr.className = "tr";
 
+    //choice numbers
     const divLabel = document.createElement("div");
     divLabel.className = "td";
-    divLabel.textContent = "Lottery";
+    divLabel.textContent = "Choice " + (index + 1) + ".";
     divTr.appendChild(divLabel);
 
-    const divAmount = document.createElement("div");
-    divAmount.className = "td";
-    divAmount.textContent = "$" + cashAmount;
-    divTr.appendChild(divAmount);
+     // Lottery choices
+     const divLotteryChoices = document.createElement("div");
+     divLotteryChoices.className = "td";
+ 
+     const radioInputLottery = document.createElement("input");
+     radioInputLottery.type = "radio";
+     radioInputLottery.name = "choice" + index;
+     radioInputLottery.value = "Lottery";
+     radioInputLottery.id = "lottery" + index;
+     radioInputLottery.required = true; // Added required attribute;
+ 
+     const labelLottery = document.createElement("label");
+     labelLottery.innerHTML = "<i>Lottery</i>";
+     labelLottery.setAttribute("for", "lottery" + index);
+ 
+     divLotteryChoices.appendChild(radioInputLottery);
+     divLotteryChoices.appendChild(labelLottery);
+     divTr.appendChild(divLotteryChoices);
 
-    const divChoices = document.createElement("div");
-    divChoices.className = "td";
+    // the "vs" label
+    const divVS = document.createElement("div");
+    divVS.className = "td";
+    divVS.innerHTML = "<i>vs</i>";
+    divTr.appendChild(divVS);
 
-    for (let choice in choices) {
-      const label = document.createElement("label");
-      const radioInput = document.createElement("input");
-      radioInput.type = "radio";
-      radioInput.name = "choice" + index;
-      radioInput.value = choice;
-      radioInput.required = true; // Added required attribute
+    // Cash choices
+    const divCashChoices = document.createElement("div");
+    divCashChoices.className = "td";
 
-      const span = document.createElement("span");
-      span.textContent = choice;
+    const radioInputCash = document.createElement("input");
+    radioInputCash.type = "radio";
+    radioInputCash.name = "choice" + index;
+    radioInputCash.value = cashAmount + "Cash";
+    radioInputCash.id = "cash" + index;
+    radioInputCash.required = true; // Added required attribute;
 
-      label.appendChild(radioInput);
-      label.appendChild(span);
-      divChoices.appendChild(label);
-    }
+    const labelCash = document.createElement("label");
+    labelCash.innerHTML = "<i>$" + cashAmount + " for sure</i>";
+    labelCash.setAttribute("for", "cash" + index);
 
-    divTr.appendChild(divChoices);
+    divCashChoices.appendChild(radioInputCash);
+    divCashChoices.appendChild(labelCash);
+    divTr.appendChild(divCashChoices);
+
+    // adding the rows to the
     tableBody.appendChild(divTr);
   });
 }
@@ -53,7 +74,7 @@ function handleRadioSelection() {
   alert("Selected values: " + selectedValues.join(", "));
 
   for (let i = 0; i < selectedValues.length - 1; i++) {
-    if (selectedValues[i] === "Lottery" && selectedValues[i + 1] === "Cash") {
+    if (selectedValues[i] === "Lottery" && selectedValues[i + 1] === (cashAmount+"Cash")) {
       upper = lotteries[i + 1];
       lower = lotteries[i];
       break;
