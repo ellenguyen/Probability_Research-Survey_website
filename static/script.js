@@ -1,5 +1,5 @@
 // Creating the rows
-function createLotteryRows(cashAmounts, choices, tableBodyId) {
+function createLotteryRows(cashAmounts, tableBodyId) {
   const tableBody = document.getElementById(tableBodyId);
 
   cashAmounts.forEach((cashAmount, index) => {
@@ -62,8 +62,9 @@ function createLotteryRows(cashAmounts, choices, tableBodyId) {
 }
 
 // Function to handle radio button selection
+const selectedValues = [];
 function handleRadioSelection() {
-  const selectedValues = [];
+
   const radios = document.querySelectorAll("input[type='radio']:checked");
 
   radios.forEach((radio) => {
@@ -73,16 +74,17 @@ function handleRadioSelection() {
   // Display the selected values in an alert
   alert("Selected values: " + selectedValues.join(", "));
 
+
   for (let i = 0; i < selectedValues.length - 1; i++) {
-    if (selectedValues[i] === "Lottery" && selectedValues[i + 1] === (cashAmount+"Cash")) {
+    if (selectedValues[i] === "Lottery" && selectedValues[i + 1].includes("Cash")) {
       upper = lotteries[i + 1];
       lower = lotteries[i];
+      alert("lotteries " + lotteries )
       break;
     }
   }
 
   // Update the lotteries
-  lotteries = generateLotteryRange(lower, upper, 5);
   alert("Upper: " + upper + ", Lower: " + lower);
 }
 
@@ -120,15 +122,11 @@ let upper = 200;
 let lower = 20;
 let stepSize = 20;
 let lotteries = generateLotteryRange(lower, upper, stepSize);
-const choices = {
-  Cash: "Cash",
-  Lottery: "Lottery",
-};
 
 // Initialize the lottery table and handle form submission
 function initializeLotteryTable() {
   const tableBodyId = "tbody";
-  createLotteryRows(lotteries, choices, tableBodyId);
+  createLotteryRows(lotteries, tableBodyId);
 
   const form = document.getElementById("lotteryForm");
   form.addEventListener("submit", function(event) {
@@ -160,7 +158,7 @@ function initializeLotteryTable() {
         round++;
       }
       lotteries = generateLotteryRange(lower, upper, stepSize);
-      createLotteryRows(lotteries, choices, tableBodyId);
+      createLotteryRows(lotteries, tableBodyId);
     }
   });
 }
