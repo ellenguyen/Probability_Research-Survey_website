@@ -49,7 +49,7 @@ function createLotteryRows(cashAmounts, tableBodyId) {
     radioInputCash.required = true; // Added required attribute;
 
     const labelCash = document.createElement("label");
-    labelCash.innerHTML = "<i>$" + cashAmount + " for sure</i>";
+    labelCash.innerHTML = "<b><i>$" + cashAmount + "</b> for sure</i>";
     labelCash.setAttribute("for", "cash" + index);
 
     divCashChoices.appendChild(radioInputCash);

@@ -9,32 +9,49 @@
     <title>Document</title>
 </head>
 <body>
-    <div>
-        <h2>TASK 1. For each choice, indicate whether you would prefer playing out the lottery (left) or receiving the sure payout (right).</h2>
-    </div>
-
-    <div id="big">
-        <form action="/users_first_choice" method="post" id="lotteryForm">
-            <div class="table">
-
-                <div class="thead">
-                    <!-- <div class="tr">
-                        <div class="td">Round 1</div>
-                        <div class="td">Cash Amount</div>
-                        <div class="td">User Input</div>
-                    </div> -->
-                </div>
-
-                <div class="tbody" id="tbody">
-                    <!-- Rows will be dynamically added here -->
-                </div>
+    <div id="whole-page-container">
+        <div>
+            <p id="title"> <b>TASK 1.</b> For each choice, indicate whether you would prefer playing out the lottery (left) or receiving the sure payout (right).</p>
+        </div>
+        <div class="b"></div>
+        <div id="wrapper">  
+            <div class="lottery-container1">
+                <h1 class="lottery-title">Lottery </h1>
+            </div>
+            <div class="lottery-container2">
+                <span class="lottery-title" id="arrow">&#10132;</span>
+            </div>
+            <div class="lottery-container3">
+                <h1>You receive $50 with probability 5% and $5 probability 95%</h1>
 
             </div>
+        </div>
+        
 
-            <div class="submit-button" id="submit-button" style="text-align: center;" action="/users_first_choice">
-                <button type="submit" class="submit-button" style="margin-left: auto; margin-right: auto;">Submit</button>
-             </div>
-        </form>
+        <div id="big">
+            
+            <form action="/users_first_choice" method="post" id="lotteryForm">
+                <div class="table">
+
+                    <div class="thead">
+                        <!-- <div class="tr">
+                            <div class="td">Round 1</div>
+                            <div class="td">Cash Amount</div>
+                            <div class="td">User Input</div>
+                        </div> -->
+                    </div>
+
+                    <div class="tbody" id="tbody">
+                        <!-- Rows will be dynamically added here -->
+                    </div>
+
+                </div>
+
+                <div class="submit-button" id="submit-button" style="text-align: center;" action="/users_first_choice">
+                    <button type="submit" class="submit-button" style="margin-left: auto; margin-right: auto;">Submit</button>
+                </div>
+            </form>
+        </div>
     </div>
 </body>
 </html>

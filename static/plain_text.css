@@ -28,7 +28,7 @@ body{
 .td {
   display: table-cell;
   border: 1px solid transparent;
-  padding: 8px;
+  padding-right: 50px;
   text-align: center;
 }
 
@@ -46,11 +46,44 @@ body{
   margin: 5px;
   padding: 10px;
 }
-h1{
+
+/* lottery title */
+#arrow{
+  font-size: 50px;
+}
+#wrapper{
   display: flex;
   justify-content: center;
 }
+.lottery-title{
+  font-size: 25px;
+  color: rgb(42, 42, 255);
+}
+.lottery-container1{
+  /* border: 1px solid red; */
+  display: flex;
+  place-items: center;
+  text-align: center;
+}
+.lottery-container2{
+  display: flex;
+  place-items: center;
+  /* border: 1px solid green; */
+  align-items: center;
+  
+}
+.lottery-container3{
+  display: flex;
+  place-items: center; 
+  border: 3px solid rgb(36, 92, 247);
+  height: 100px;
+}
 
+#title{
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+}
 
 /* make the input as a box */
 
@@ -68,7 +101,7 @@ label {
 
 /* Style the label when the radio button is checked */
 input[type="radio"]:checked + label {
-  background-color: orange; /* Change the background color to orange */
+  background-color: rgb(223, 204, 122); /* Change the background color to orange */
   
   border-color: #999;
 }
