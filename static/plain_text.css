@@ -78,6 +78,10 @@ body{
   border: 3px solid rgb(36, 92, 247);
   height: 100px;
 }
+.label-choice{
+  padding-right: 100px;
+  padding-left: 100px;
+}
 
 #title{
   font-size: 20px;

@@ -24,6 +24,7 @@ function createLotteryRows(cashAmounts, tableBodyId) {
      radioInputLottery.required = true; // Added required attribute;
  
      const labelLottery = document.createElement("label");
+     labelLottery.className = "label-choice"
      labelLottery.innerHTML = "<i>Lottery</i>";
      labelLottery.setAttribute("for", "lottery" + index);
  
@@ -49,6 +50,7 @@ function createLotteryRows(cashAmounts, tableBodyId) {
     radioInputCash.required = true; // Added required attribute;
 
     const labelCash = document.createElement("label");
+    labelCash.className = "label-choice"
     labelCash.innerHTML = "<b><i>$" + cashAmount + "</b> for sure</i>";
     labelCash.setAttribute("for", "cash" + index);
 
