@@ -27,15 +27,8 @@ classes = [
     "MATH 1001",
 ]
 
-# connect DATABASE
-# db = yaml.safe_load(open('db.yaml'))
-# conn = psycopg2.connect(
-#         host= db['postgres_host'],
-#         database= db["postgres_db"],
-#         user= db["postgres_user"],
-#         password= db['postgres_password'])
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/", methods=["GET"])
 def index():
     if request.method == "GET": 
         return render_template("index.html",classes=classes)
