@@ -3,200 +3,200 @@
         "image": "Lottery_01.jpg",
         "high": 50,
         "low": 5,
-        "first-round-values": [50, 45, 40, 35, 30, 25, 20, 15, 10, 5],
-        "second-round-step-size": 0.5,
-        "probability": 0.05
+        "first_round_step_size": 5,
+        "second_round_step_size": 0.5,
+        "probability_high": 0.05
     },
     {
         "image": "Lottery_02.jpg",
         "high": 100,
         "low": 20,
-        "first-round-values": [100, 90, 80, 70, 60, 50, 40, 30, 20],
-        "second-round-step-size": 1,
-        "probability": 0.05
+        "first_round_step_size": 10,
+        "second_round_step_size": 1,
+        "probability_high": 0.05
     },
     {
         "image": "Lottery_03.jpg",
         "high": 150,
         "low": 50,
-        "first-round-values": [150, 140, 130, 120, 110, 100, 90, 80, 70, 60, 50],
-        "second-round-step-size": 1,
-        "probability": 0.05
+        "first_round_step_size": 10,
+        "second_round_step_size": 1,
+        "probability_high": 0.05
     },
     {
         "image": "Lottery_04.jpg",
         "high": 400,
         "low": 40,
-        "first-round-values": [400, 360, 320, 280, 240, 200, 160, 120, 80, 40],
-        "second-round-step-size": 4,
-        "probability": 0.05
+        "first_round_step_size": 40,
+        "second_round_step_size": 4,
+        "probability_high": 0.05
     },
     {
         "image": "Lottery_05.jpg",
         "high": 50,
         "low": 5,
-        "first-round-values": [50, 45, 40, 35, 30, 25, 20, 15, 10, 5],
-        "second-round-step-size": 0.5,
-        "probability": 0.1
+        "first_round_step_size": 5,
+        "second_round_step_size": 0.5,
+        "probability_high": 0.1
     },
     {
         "image": "Lottery_06.jpg",
         "high": 100,
         "low": 50,
-        "first-round-values": [100, 95, 90, 85, 80, 75, 70, 65, 60, 55, 50],
-        "second-round-step-size": 0.5,
-        "probability": 0.1
+        "first_round_step_size": 5,
+        "second_round_step_size": 0.5,
+        "probability_high": 0.1
     },
     {
         "image": "Lottery_07.jpg",
         "high": 300,
         "low": 100,
-        "first-round-values": [300, 280, 260, 240, 220, 200, 180, 160, 140, 120, 100],
-        "second-round-step-size": 2,
-        "probability": 0.1
+        "first_round_step_size": 20,
+        "second_round_step_size": 2,
+        "probability_high": 0.1
     },
     {
         "image": "Lottery_08.jpg",
         "high": 50,
         "low": 10,
-        "first-round-values": [50, 45, 40, 35, 30, 25, 20, 15, 10],
-        "second-round-step-size": 0.5,
-        "probability": 0.25
+        "first_round_step_size": 5,
+        "second_round_step_size": 0.5,
+        "probability_high": 0.25
     },
     {
         "image": "Lottery_09.jpg",
         "high": 100,
         "low": 50,
-        "first-round-values": [100, 95, 90, 85, 80, 75, 70, 65, 60, 55, 50],
-        "second-round-step-size": 0.5,
-        "probability": 0.25
+        "first_round_step_size": 5,
+        "second_round_step_size": 0.5,
+        "probability_high": 0.25
     },
     {
         "image": "Lottery_10.jpg",
         "high": 200,
         "low": 20,
-        "first-round-values": [200, 180, 160, 140, 120, 100, 80, 60, 40, 20],
-        "second-round-step-size": 2,
-        "probability": 0.25
+        "first_round_step_size": 20,
+        "second_round_step_size": 2,
+        "probability_high": 0.25
     },
     {
         "image": "Lottery_11.jpg",
         "high": 50,
         "low": 10,
-        "first-round-values": [50, 45, 40, 35, 30, 25, 20, 15, 10],
-        "second-round-step-size": 0.5,
-        "probability": 0.5
+        "first_round_step_size": 5,
+        "second_round_step_size": 0.5,
+        "probability_high": 0.5
     },
     {
         "image": "Lottery_12.jpg",
         "high": 100,
         "low": 20,
-        "first-round-values": [100, 90, 80, 70, 60, 50, 40, 30, 20],
-        "second-round-step-size": 1,
-        "probability": 0.5
+        "first_round_step_size": 10,
+        "second_round_step_size": 1,
+        "probability_high": 0.5
     },
     {
         "image": "Lottery_13.jpg",
         "high": 150,
         "low": 50,
-        "first-round-values": [150, 140, 130, 120, 110, 100, 90, 80, 70, 60, 50],
-        "second-round-step-size": 1,
-        "probability": 0.5
+        "first_round_step_size": 10,
+        "second_round_step_size": 1,
+        "probability_high": 0.5
     },
     {
         "image": "Lottery_14.jpg",
         "high": 200,
         "low": 20,
-        "first-round-values": [200, 180, 160, 140, 120, 100, 80, 60, 40, 20],
-        "second-round-step-size": 2,
-        "probability": 0.5
+        "first_round_step_size": 20,
+        "second_round_step_size": 2,
+        "probability_high": 0.5
     },
     {
         "image": "Lottery_15.jpg",
         "high": 300,
         "low": 100,
-        "first-round-values": [300, 280, 260, 240, 220, 200, 180, 160, 140, 120, 100],
-        "second-round-step-size": 2,
-        "probability": 0.5
+        "first_round_step_size": 20,
+        "second_round_step_size": 2,
+        "probability_high": 0.5
     },
     {
         "image": "Lottery_16.jpg",
         "high": 400,
         "low": 40,
-        "first-round-values": [400, 360, 320, 280, 240, 200, 160, 120, 80, 40],
-        "second-round-step-size": 4,
-        "probability": 0.5
+        "first_round_step_size": 40,
+        "second_round_step_size": 4,
+        "probability_high": 0.5
     },
     {
         "image": "Lottery_17.jpg",
         "high": 50,
         "low": 10,
-        "first-round-values": [50, 45, 40, 35, 30, 25, 20, 15, 10],
-        "second-round-step-size": 0.5,
-        "probability": 0.75
+        "first_round_step_size": 5,
+        "second_round_step_size": 0.5,
+        "probability_high": 0.75
     },
     {
         "image": "Lottery_18.jpg",
         "high": 100,
         "low": 50,
-        "first-round-values": [100, 95, 90, 85, 80, 75, 70, 65, 60, 55, 50],
-        "second-round-step-size": 0.5,
-        "probability": 0.75
+        "first_round_step_size": 5,
+        "second_round_step_size": 0.5,
+        "probability_high": 0.75
     },
     {
         "image": "Lottery_19.jpg",
         "high": 200,
         "low": 20,
-        "first-round-values": [200, 180, 160, 140, 120, 100, 80, 60, 40, 20],
-        "second-round-step-size": 2,
-        "probability": 0.75
+        "first_round_step_size": 20,
+        "second_round_step_size": 2,
+        "probability_high": 0.75
     },
     {
         "image": "Lottery_20.jpg",
         "high": 50,
         "low": 5,
-        "first-round-values": [50, 45, 40, 35, 30, 25, 20, 15, 10, 5],
-        "second-round-step-size": 0.5,
-        "probability": 0.9
+        "first_round_step_size": 5,
+        "second_round_step_size": 0.5,
+        "probability_high": 0.9
     },
     {
         "image": "Lottery_21.jpg",
         "high": 100,
         "low": 50,
-        "first-round-values": [100, 95, 90, 85, 80, 75, 70, 65, 60, 55, 50],
-        "second-round-step-size": 0.5,
-        "probability": 0.9
+        "first_round_step_size": 5,
+        "second_round_step_size": 0.5,
+        "probability_high": 0.9
     },
     {
         "image": "Lottery_22.jpg",
         "high": 300,
         "low": 100,
-        "first-round-values": [300, 280, 260, 240, 220, 200, 180, 160, 140, 120, 100],
-        "second-round-step-size": 2,
-        "probability": 0.9
+        "first_round_step_size": 20,
+        "second_round_step_size": 2,
+        "probability_high": 0.9
     },
     {
         "image": "Lottery_23.jpg",
         "high": 50,
         "low": 5,
-        "first-round-values": [50, 45, 40, 35, 30, 25, 20, 15, 10, 5],
-        "second-round-step-size": 0.5,
-        "probability": 0.95
+        "first_round_step_size": 5,
+        "second_round_step_size": 0.5,
+        "probability_high": 0.95
     },
     {
         "image": "Lottery_24.jpg",
         "high": 100,
         "low": 20,
-        "first-round-values": [100, 90, 80, 70, 60, 50, 40, 30, 20],
-        "second-round-step-size": 1,
-        "probability": 0.95
+        "first_round_step_size": 10,
+        "second_round_step_size": 1,
+        "probability_high": 0.95
     },
     {
         "image": "Lottery_25.jpg",
         "high": 150,
         "low": 50,
-        "first-round-values": [150, 140, 130, 120, 110, 100, 90, 80, 70, 60, 50],
-        "second-round-step-size": 1,
-        "probability": 0.95
+        "first_round_step_size": 10,
+        "second_round_step_size": 1,
+        "probability_high": 0.95
     }
 ]

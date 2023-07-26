@@ -1,5 +1,5 @@
 # import libraries to redirect to different page layouts
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 
 # install pip install Flask psycopg2-binary
 import psycopg2
@@ -10,14 +10,22 @@ import yaml
 # library to randomly redirect users
 import random
 
+import os
+
+import dotenv
+dotenv.load_dotenv()
+
 app = Flask(__name__)
+app.secret_key = os.getenv("APP-SECRET-KEY")
+
+MAX_LOTTERY = 25
 
 # more classes added upon instructions
 classes = [
-        "CIS 1001",
-        "STAT 1001",
-        "MATH 1001",
-    ]
+    "CIS 1001",
+    "STAT 1001",
+    "MATH 1001",
+]
 
 # connect DATABASE
 # db = yaml.safe_load(open('db.yaml'))
@@ -33,6 +41,22 @@ def index():
         return render_template("index.html",classes=classes)
 
     elif request.method == "POST":
+        visualization = random.random() < 0.5
+
+        session['user_info'] = {
+            'first_name': request.form['first_name'],
+            'last_name': request.form['last_name'],
+            'student_id': request.form['student_id'],
+            'class': request.form['class'],
+            'instructor': request.form['instructor'],
+            'major': request.form['major'],
+            'university_year': request.form['university_year'],
+            'taken_statistics': request.form['statistics'],
+            'visualization': visualization
+        }
+
+        print(session['user_info'])
+
         # asking the request from the user 
         # first_name = request.form['first_name']
         # last_name = request.form['last_name']
@@ -52,22 +76,24 @@ def index():
         # cur.close()
         # conn.close()
 
-
-        # 50% chance to enable visualization
-        visualization = random.random() < 0.5
-        return render_template("/lotteries.html", visualization=visualization)
-
-@app.route("/plain_text")
-def plain_text():
-    return render_template("plain_text.html")
-
-@app.route("/visualization")
-def visualization():
-    return render_template("visualization.html")
+        return redirect('/lottery')
+    
+@app.route('/lottery', methods=['GET', 'POST'])
+@app.route('/lottery/', methods=['GET', 'POST'])
+@app.route('/lottery/<lottery_num>', methods=['GET', 'POST'])
+def lottery(lottery_num=1):
+    if 'user_info' not in session or int(lottery_num) > MAX_LOTTERY:
+        return redirect(url_for('index'))
+    print(session['user_info'])
+    return render_template("/lotteries.html", lottery_num=lottery_num, lottery_image=f'Lottery_{f"{lottery_num:0>2}"}.jpg', visualization=session['user_info']['visualization'])
 
 @app.route("/success")
 def success():
     return render_template("success.html")
+
+# determine if the user should be shown lottery visualization for this survey session
+def set_visualization_session():
+    session['visualization'] = random.random() < 0.5
 
 if __name__ == '__main__':
     #so that it keep refresing

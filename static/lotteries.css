@@ -37,15 +37,23 @@ body{
 
 #big {
   display: flex;
-  justify-content: center;
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Horizontally center the children */
   margin-top: 50px;
 }
 
-.submit-button{
+.submit-button {
   margin: 5px;
   padding: 10px;
 }
-h1{
+
+h1 {
   display: flex;
   justify-content: center;
+}
+
+#lottery-image {
+  margin: 5rem;
+  width: 400px;
+  height: 400px;
 }

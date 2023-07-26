@@ -1,3 +1,11 @@
+// Global variables
+//lotteryNum defined in html passed from flask
+let CE = [];
+const choices = {
+  Cash: "Cash",
+  Lottery: "Lottery",
+};
+
 // Creating the rows
 function createLotteryRows(cashAmounts, choices, tableBodyId) {
   const tableBody = document.getElementById(tableBodyId);
@@ -92,20 +100,9 @@ function sendCEData() {
   xhr.send(data);
 }
 
-// Global variables
-let CE = [];
-let round = 1;
-let upper = 200;
-let lower = 20;
-let stepSize = 20;
-let lotteries = generateLotteryRange(lower, upper, stepSize);
-const choices = {
-  Cash: "Cash",
-  Lottery: "Lottery",
-};
-
 // Initialize the lottery table and handle form submission
-function initializeLotteryTable() {
+function initializeLotteryTable(lotteryIndex, curLottery) {
+  let lotteries = generateLotteryRange(curLottery["low"], curLottery["high"], curLottery["first_round_step_size"]);
   const tableBodyId = "tbody";
   createLotteryRows(lotteries, choices, tableBodyId);
 
@@ -144,6 +141,23 @@ function initializeLotteryTable() {
   });
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-  const bounds = initializeLotteryTable();
+async function getLotteryData() {
+  return await fetch('/static/lotteries.json') // loads local json data linked in lotteries.html. this can be changed to a flask API endpoint if needed
+  .then(response => response.json())
+  .then(data => {
+      return data
+  })
+  .catch(error => console.error('Error fetching lottery data:', error));
+}
+
+async function loadLottery(lotteryIndex) {
+  let lotteryData = await getLotteryData()
+  let curLottery = lotteryData[lotteryIndex]
+  const lotteryName = document.getElementById("lottery-name")
+  lotteryName.innerText = `Lottery ${lotteryIndex + 1}: You receive $${curLottery["high"]} with probability ${parseInt(curLottery["probability_high"] * 100)}% and $${curLottery["low"]} with probability ${parseInt((1 - curLottery["probability_high"]) * 100)}%`
+  initializeLotteryTable(lotteryIndex, curLottery)
+}
+
+document.addEventListener("DOMContentLoaded", async function() {
+  loadLottery(lotteryNum - 1)
 });

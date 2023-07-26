@@ -4,16 +4,24 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../../static/lotteries.css" />
+    <link rel="stylesheet" type="text/css" href="../static/lotteries.css" />
+    <script type="text/javascript">
+        let lotteryNum = {{ lottery_num|tojson }} // not an error. jinja syntax
+    </script>
     <script src="../static/lotteries.js"></script>
-    <title>Document</title>
+    <script type="text/javascript" src="../static/lotteries.json"></script>
+    <title>Probability Survey</title>
 </head>
 <body>
     <div>
-        <h1 id="lottery-name">Lottery: "5% of $50 95% of $5"</h1>
+        <h1 id="lottery-name">Lottery [NUMBER]: [NAME]</h1>
     </div>
 
     <div id="big">
+        {% if visualization %}
+        <img id="lottery-image" src="../static/lottery_images/{{ lottery_image }}">
+        {% endif %}
+
         <form id="lotteryForm"> <!-- form submission event listener added in lotteries.js -->
             <div class="table">
 
