@@ -4,34 +4,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../../static/plain_text.css" />
-    <script src="../../static/script.js"></script>
-    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="../static/lotteries.css" />
+    <script type="text/javascript">
+        let lotteryNum = {{ lottery_num|tojson }} // not an error. jinja syntax
+    </script>
+    <script src="../static/lotteries.js"></script>
+    <script type="text/javascript" src="../static/lotteries.json"></script>
+    <title>Probability Survey</title>
 </head>
 <body>
-    <div id="whole-page-container">
-        <div>
-            <p id="title"> <b>TASK 1. </b> For each choice, indicate whether you would prefer playing out the lottery (left) or receiving the sure payout (right).</p>
-        </div>
-        <div class="b"></div>
-        <div id="wrapper">  
-            <div class="lottery-container1">
-                <h1 class="lottery-title">Lottery </h1>
-            </div>
-            <div class="lottery-container2">
-                <span class="lottery-title" id="arrow">&#10132;</span>
-            </div>
-            <div class="lottery-container3">
-                <h1>You receive $50 with probability 5% and $5 probability 95%</h1>
+    <div>
+        <h1 id="lottery-name">Lottery [NUMBER]: [NAME]</h1>
+    </div>
 
-            </div>
-        </div>
-        
+    <div id="big">
+        {% if visualization %}
+        <img id="lottery-image" src="../static/lottery_images/{{ lottery_image }}">
+        {% endif %}
 
-        <div id="big">
-            
-            <form action="/users_first_choice" method="post" id="lotteryForm">
-                <div class="table">
+        <form id="lotteryForm"> <!-- form submission event listener added in lotteries.js -->
+            <div class="table">
 
                     <div class="thead">
                         <!-- <div class="tr">
