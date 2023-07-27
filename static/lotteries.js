@@ -1,15 +1,10 @@
 // Global variables
-//lotteryNum defined in html passed from flask
-let CE = [];
-const choices = {
-  Cash: "Cash",
-  Lottery: "Lottery",
-};
+// lotteryNum defined in html passed from flask
 
 // Creating the rows
-function createLotteryRows(cashAmounts, tableBodyId) {
-  const tableBody = document.getElementById(tableBodyId);
-
+function fillLotteryRows(cashAmounts, tableBody) {
+  tableBody.innerHTML = "";
+  
   cashAmounts.forEach((cashAmount, index) => {
     const divTr = document.createElement("div");
     divTr.className = "tr";
@@ -72,9 +67,9 @@ function createLotteryRows(cashAmounts, tableBodyId) {
 }
 
 // Function to handle radio button selection
-const selectedValues = [];
-function handleRadioSelection() {
 
+function handleRadioSelection(lotteries) {
+  const selectedValues = [];
   const radios = document.querySelectorAll("input[type='radio']:checked");
 
   radios.forEach((radio) => {
@@ -84,18 +79,21 @@ function handleRadioSelection() {
   // Display the selected values in an alert
   alert("Selected values: " + selectedValues.join(", "));
 
-
   for (let i = 0; i < selectedValues.length - 1; i++) {
+    // if there is a switch from cash to lottery
+    if (selectedValues[i + 1] === "Lottery" && selectedValues[i].includes("Cash")) {
+      alert("Please switch from lottery to cash")
+      return [-1, -1]
+    }
+    // if there is a switch from lottery to cash
     if (selectedValues[i] === "Lottery" && selectedValues[i + 1].includes("Cash")) {
-      upper = lotteries[i + 1];
-      lower = lotteries[i];
-      alert("lotteries " + lotteries )
-      break;
+      //TODO: SEND SELECTED VALUES WITH ROUND AND LOTTERY NUMBER TO FLASK SESSION
+      return [lotteries[i], lotteries[i + 1]]
     }
   }
 
-  // Update the lotteries
-  alert("Upper: " + upper + ", Lower: " + lower);
+  alert("Please choose a difference");
+  return [-1, -1]
 }
 
 // Function to generate a range of lotteries with a specified step size
@@ -108,12 +106,13 @@ function generateLotteryRange(start, end, step) {
 }
 
 // Function to send CE data to Flask
-function sendCEData() {
+// TODO: make this do something?
+function sendCEData(low, high) {
   const xhr = new XMLHttpRequest();
   xhr.open("POST", "/ce-data", true);
   xhr.setRequestHeader("Content-Type", "application/json");
 
-  const data = JSON.stringify({ lower_bound: lower, upper_bound: upper });
+  const data = JSON.stringify({ lower_bound: low, upper_bound: high });
 
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4 && xhr.status === 200) {
@@ -126,43 +125,42 @@ function sendCEData() {
 }
 
 // Initialize the lottery table and handle form submission
-function initializeLotteryTable(lotteryIndex, curLottery) {
-  let lotteries = generateLotteryRange(curLottery["low"], curLottery["high"], curLottery["first_round_step_size"]);
-  const tableBodyId = "tbody";
-  createLotteryRows(lotteries, tableBodyId);
+function initializeLotteryTable(curLottery) {
+  const tableBody = document.getElementById("tbody");
+  let secondRound = false
+  let low = curLottery["low"]
+  let high = curLottery["high"]
+  let lotteries = generateLotteryRange(low, high, curLottery["first_round_step_size"]);
+  fillLotteryRows(lotteries, tableBody);
 
   const form = document.getElementById("lotteryForm");
   form.addEventListener("submit", function(event) {
     event.preventDefault(); // Prevent the form from submitting
 
-    handleRadioSelection(); // Update the lotteries
+    [low, high] = handleRadioSelection(lotteries);
+    alert(`${low}, ${high}`)
 
-    if (upper - lower === 2) {
-      // If the difference is 1, display a message and disable the button
-      alert("We have find the CE!");
+    if (low === -1 || high === -1) {
+      return
+    }
+
+    if (secondRound) {
       document.getElementById("submit-button").disabled = true;
 
-      // Add the lower and upper bounds to the CE array
-      CE.push(lower);
-      CE.push(upper);
-      alert("The CE is [" + lower + ", " + upper + "]");
+      sendCEData(low, high);
 
-      // Send CE data to Flask
-      sendCEData();
-
-      // Redirect to success page
-      window.location.href = "/success";
-    } else {
-      // Clear the table body and create new lottery rows
-      document.getElementById(tableBodyId).innerHTML = "";
-      if (round === 1) {
-        // Change the stepSize after the first round
-        stepSize = 2;
-        round++;
+      if (lotteryNum === 25) {
+        window.location.href = "/success"
+        return
       }
-      lotteries = generateLotteryRange(lower, upper, stepSize);
-      createLotteryRows(lotteries, tableBodyId);
+      
+      window.location.href = `/lottery/${lotteryNum + 1}`
     }
+
+    // Clear the table body and fill second round
+    lotteries = generateLotteryRange(low, high, curLottery["second_round_step_size"]);
+    fillLotteryRows(lotteries, tableBody);
+    secondRound = true
   });
 }
 
@@ -178,11 +176,27 @@ async function getLotteryData() {
 async function loadLottery(lotteryIndex) {
   let lotteryData = await getLotteryData()
   let curLottery = lotteryData[lotteryIndex]
-  const lotteryName = document.getElementById("lottery-name")
-  lotteryName.innerText = `Lottery ${lotteryIndex + 1}: You receive $${curLottery["high"]} with probability ${parseInt(curLottery["probability_high"] * 100)}% and $${curLottery["low"]} with probability ${parseInt((1 - curLottery["probability_high"]) * 100)}%`
-  initializeLotteryTable(lotteryIndex, curLottery)
+
+  const taskName = document.getElementById("task-name")
+  taskName.innerText = `TASK ${lotteryIndex + 1}:`
+
+  const lotteryDescription = document.getElementById("lottery-description")
+  lotteryDescription.innerText = `You receive $${curLottery["high"]} with probability ${parseInt(curLottery["probability_high"] * 100)}% and $${curLottery["low"]} with probability ${parseInt((1 - curLottery["probability_high"]) * 100)}%`
+
+  initializeLotteryTable(curLottery)
 }
 
 document.addEventListener("DOMContentLoaded", async function() {
   loadLottery(lotteryNum - 1)
 });
+
+// refreshes the page whenever it is shown.
+// when using back and forward buttons in browser, state is usually saved which causes problems with lottery display after submission
+// TODO: Find a better solution than this
+(function () {
+  window.onpageshow = function(event) {
+      if (event.persisted) {
+          window.location.reload();
+      }
+  };
+})();
