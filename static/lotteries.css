@@ -28,7 +28,7 @@ body {
 .td {
   display: table-cell;
   border: 1px solid transparent;
-  padding-right: 50px;
+  padding-right: 35px;
   text-align: center;
 }
 
@@ -40,7 +40,7 @@ body {
   display: flex;
   flex-direction: column; /* Stack children vertically */
   align-items: center; /* Horizontally center the children */
-  margin-top: 50px;
+  margin-top: 10px;
 }
 
 .submit-button {
@@ -53,63 +53,69 @@ h1 {
   justify-content: center;
   color: black;
   margin: 1rem;
+  font-size: 16px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 #lottery-image {
   margin: 0;
-  width: 200px;
-  height: 200px;
+  width: 340px;
+  height: 190px;
 }
 
 /* lottery title */
-#arrow{
+#arrow {
   font-size: 50px;
 }
-#wrapper{
+#wrapper {
   display: flex;
   justify-content: center;
 }
-.lottery-title{
+.lottery-title {
   font-size: 20px;
   color: rgb(42, 42, 255);
 }
-.lottery-container1{
+.lottery-container1 {
   /* border: 1px solid red; */
   display: flex;
   place-items: center;
   text-align: center;
 }
-.lottery-container2{
+.lottery-container2 {
   display: flex;
   place-items: center;
   /* border: 1px solid green; */
   align-items: center;
   
 }
-.lottery-container3{
+.lottery-container3 {
   display: flex;
   flex-direction: column; /* Stack children vertically */
   align-items: center; /* Horizontally center the children */
   border: 3px solid rgb(36, 92, 247);
 }
 
-#title{
-  font-size: 20px;
+/* title for Task 1 */
+#title {
+  font-size: 18px;
   display: flex;
   justify-content: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 /* make the input as a box */
-
 input[type="radio"] {
   display: none;
 }
+
 /* Create the box-style appearance for the labels */
 label {
   display: inline-block;
   border: 2px solid #ccc;
-  padding: 10px;
-  margin: 5px;
+  padding: 7px;
+  margin: 4px;
   cursor: pointer;
 }
 
@@ -120,7 +126,7 @@ input[type="radio"]:checked + label {
 }
 
 .label-choice {
-  padding-right: 20px;
-  padding-left: 20px;
+  padding-right: 10px;
+  padding-left: 10px;
   min-width: 200px;
 }
