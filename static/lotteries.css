@@ -51,10 +51,71 @@ body{
 h1 {
   display: flex;
   justify-content: center;
+  color: black;
+  margin: 1rem;
 }
 
 #lottery-image {
-  margin: 5rem;
+  margin: 0;
   width: 400px;
   height: 400px;
+}
+
+/* lottery title */
+#arrow{
+  font-size: 50px;
+}
+#wrapper{
+  display: flex;
+  justify-content: center;
+}
+.lottery-title{
+  font-size: 25px;
+  color: rgb(42, 42, 255);
+}
+.lottery-container1{
+  /* border: 1px solid red; */
+  display: flex;
+  place-items: center;
+  text-align: center;
+}
+.lottery-container2{
+  display: flex;
+  place-items: center;
+  /* border: 1px solid green; */
+  align-items: center;
+  
+}
+.lottery-container3{
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Horizontally center the children */
+  border: 3px solid rgb(36, 92, 247);
+}
+
+#title{
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+/* make the input as a box */
+
+input[type="radio"] {
+  display: none;
+}
+/* Create the box-style appearance for the labels */
+label {
+  display: inline-block;
+  border: 2px solid #ccc;
+  padding: 10px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+/* Style the label when the radio button is checked */
+input[type="radio"]:checked + label {
+  background-color: rgb(223, 204, 122); /* Change the background color to orange */
+  
+  border-color: #999;
 }
