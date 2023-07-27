@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../static/lotteries.css" />
     <script type="text/javascript">
-        let lotteryNum = {{ lottery_num|tojson }} // not an error. jinja syntax
+        let lotteryNum = parseInt({{ lottery_num|tojson }})// not an error. jinja syntax
     </script>
     <script src="../static/lotteries.js"></script>
     <script type="text/javascript" src="../static/lotteries.json"></script>
@@ -14,13 +14,24 @@
 </head>
 <body>
     <div>
-        <h1 id="lottery-name">Lottery [NUMBER]: [NAME]</h1>
+        <p id="title"> <b id="task-name">TASK [NUMBER]:</b>&nbsp;For each choice, indicate whether you would prefer playing out the lottery (left) or receiving the sure payout (right).</p>
+    </div>
+    <div id="wrapper">
+        <div class="lottery-container1">
+            <h1 class="lottery-title">Lottery</h1>
+        </div>
+        <div class="lottery-container2">
+            <span class="lottery-title" id="arrow">&#10132;</span>
+        </div>
+        <div class="lottery-container3">
+            <h1 id="lottery-description">[DESCRIPTION]</h1>
+            {% if visualization %}
+            <img id="lottery-image" src="../static/lottery_images/{{ lottery_image }}">
+            {% endif %}
+        </div>
     </div>
 
     <div id="big">
-        {% if visualization %}
-        <img id="lottery-image" src="../static/lottery_images/{{ lottery_image }}">
-        {% endif %}
 
         <form id="lotteryForm"> <!-- form submission event listener added in lotteries.js -->
             <div class="table">

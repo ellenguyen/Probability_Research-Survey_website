@@ -16,9 +16,11 @@ import dotenv
 dotenv.load_dotenv()
 
 app = Flask(__name__)
+print(os.getenv("APP-SECRET-KEY"))
 app.secret_key = os.getenv("APP-SECRET-KEY")
 
 MAX_LOTTERY = 25
+DEBUG = False
 
 # more classes added upon instructions
 classes = [
@@ -27,9 +29,10 @@ classes = [
     "MATH 1001",
 ]
 
-
-@app.route("/", methods=["GET"])
+@app.route("/", methods=['GET', 'POST'])
 def index():
+    if DEBUG:
+        session.clear()
     if request.method == "GET": 
         return render_template("index.html",classes=classes)
 
@@ -48,7 +51,8 @@ def index():
             'visualization': visualization
         }
 
-        print(session['user_info'])
+        if DEBUG:   
+            print(session['user_info'])
 
 @app.route('/user_info', methods=['POST'])
 def user_info():
@@ -71,8 +75,8 @@ def user_info():
 
         return redirect('/lottery')
     
-@app.route('/lottery', methods=['GET', 'POST'])
-@app.route('/lottery/', methods=['GET', 'POST'])
+@app.route('/lottery', methods=['GET'])
+@app.route('/lottery/', methods=['GET'])
 @app.route('/lottery/<lottery_num>', methods=['GET', 'POST'])
 def lottery(lottery_num=1):
     if 'user_info' not in session or int(lottery_num) > MAX_LOTTERY:
