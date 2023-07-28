@@ -42,7 +42,7 @@
 
                         <!-- Instructor name only accepting letters -->
                         <label for="instructor" class="red-asterik">Instructor:</label><br>
-                        <input autocomplete="off" autofocus id="instructor" name="instructor" placeholder="Enter your instructor's name" type="text" class="input-field" onkeydown="return /[a-z]/i.test(event.key)" required /><br>
+                        <input autocomplete="off" autofocus id="instructor" name="instructor" placeholder="Enter your instructor's name" type="text" class="input-field" onkeydown="return /[a-z ]/i.test(event.key)" required /><br>
                     </div>
 
                     <div class="input-group" class="red-asterik">
@@ -50,7 +50,7 @@
 
                         <!-- Major only accepting letters -->
                         <!-- or do drop down boxes -->
-                        <input autocomplete="off" autofocus id="major" name="major" placeholder="Enter your major" type="text" class="input-field" onkeydown="return /[a-z]/i.test(event.key)" required /><br>
+                        <input autocomplete="off" autofocus id="major" name="major" placeholder="Enter your major" type="text" class="input-field" onkeydown="return /[a-z ]/i.test(event.key)" required /><br>
                     </div>
 
                     <div class="input-group">
@@ -65,7 +65,7 @@
                     </div>
 
                     <div class="input-group">
-                        <label>Have you studied statistics before?</label><br>
+                        <label for="statistics" class="red-asterik">Have you studied statistics before?</label><br>
                         <div class="radio-group">
                             <label>
                                 <input type="radio" name="statistics" value="Yes" required>
