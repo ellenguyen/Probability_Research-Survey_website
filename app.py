@@ -54,25 +54,6 @@ def index():
         if DEBUG:   
             print(session['user_info'])
 
-        # asking the request from the user 
-        # first_name = request.form['first_name']
-        # last_name = request.form['last_name']
-        # student_id = request.form['student_id']
-        # class_taking = request.form['class']
-        # instructor = request.form['instructor']
-        # major = request.form['major']
-        # university_year = request.form['university_year']
-        # statistics = request.form['statistics']
-
-        # creating a cursor to use DATABASE operations
-        # cur = conn.cursor()
-        # insert the data into the database
-
-        # cur.execute('''INSERT INTO ['table_name'] (first_name, last_name,student_id,class_taking, instructor, major, university_year, statistics) VALUES(%s, %s)''', (first_name, last_name,student_id,class_taking, instructor, major, university_year, statistics))
-        # conn.commit()
-        # cur.close()
-        # conn.close()
-
         return redirect('/lottery')
     
 @app.route('/lottery', methods=['GET'])
