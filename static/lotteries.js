@@ -48,7 +48,7 @@ function fillLotteryRows(cashAmounts, tableBody) {
     const radioInputCash = document.createElement("input");
     radioInputCash.type = "radio";
     radioInputCash.name = "choice" + index;
-    radioInputCash.value = cashAmount + "Cash";
+    radioInputCash.value = cashAmount;
     radioInputCash.id = "cash" + index;
     radioInputCash.required = true; // Added required attribute;
 
@@ -69,31 +69,29 @@ function fillLotteryRows(cashAmounts, tableBody) {
 // Function to handle radio button selection
 
 function handleRadioSelection(lotteries) {
-  const selectedValues = [];
+  const roundChoices = [];
   const radios = document.querySelectorAll("input[type='radio']:checked");
 
   radios.forEach((radio) => {
-    selectedValues.push(radio.value);
+    roundChoices.push(radio.value);
   });
 
   // Display the selected values in an alert
-  alert("Selected values: " + selectedValues.join(", "));
 
-  for (let i = 0; i < selectedValues.length - 1; i++) {
+  for (let i = 0; i < roundChoices.length - 1; i++) {
     // if there is a switch from cash to lottery
-    if (selectedValues[i + 1] === "Lottery" && selectedValues[i].includes("Cash")) {
+    if (roundChoices[i + 1] === "Lottery" && !isNaN(roundChoices[i])) {
       alert("Please switch from lottery to cash")
-      return [-1, -1]
+      return [-1, -1, roundChoices]
     }
     // if there is a switch from lottery to cash
-    if (selectedValues[i] === "Lottery" && selectedValues[i + 1].includes("Cash")) {
-      //TODO: SEND SELECTED VALUES WITH ROUND AND LOTTERY NUMBER TO FLASK SESSION
-      return [lotteries[i], lotteries[i + 1]]
+    if (roundChoices[i] === "Lottery" && !isNaN(roundChoices[i + 1])) {
+      return [lotteries[i], lotteries[i + 1], roundChoices]
     }
   }
 
   alert("Please choose a difference");
-  return [-1, -1]
+  return [-1, -1, roundChoices]
 }
 
 // Function to generate a range of lotteries with a specified step size
@@ -105,31 +103,15 @@ function generateLotteryRange(start, end, step) {
   return range;
 }
 
-// Function to send CE data to Flask
-// TODO: make this do something?
-function sendCEData(low, high) {
-  const xhr = new XMLHttpRequest();
-  xhr.open("POST", "/ce-data", true);
-  xhr.setRequestHeader("Content-Type", "application/json");
-
-  const data = JSON.stringify({ lower_bound: low, upper_bound: high });
-
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-      // Request completed successfully
-      console.log(xhr.responseText);
-    }
-  };
-
-  xhr.send(data);
-}
-
 // Initialize the lottery table and handle form submission
 function initializeLotteryTable(curLottery) {
   const tableBody = document.getElementById("tbody");
-  let secondRound = false
+  const LAST_ROUND = 2
+  let round = 1
   let low = curLottery["low"]
   let high = curLottery["high"]
+  let roundChoices = []
+  let choices = {}
   let lotteries = generateLotteryRange(low, high, curLottery["first_round_step_size"]);
   fillLotteryRows(lotteries, tableBody);
 
@@ -137,30 +119,35 @@ function initializeLotteryTable(curLottery) {
   form.addEventListener("submit", function(event) {
     event.preventDefault(); // Prevent the form from submitting
 
-    [low, high] = handleRadioSelection(lotteries);
-    alert(`${low}, ${high}`)
+    [low, high, roundChoices] = handleRadioSelection(lotteries);
 
     if (low === -1 || high === -1) {
       return
     }
 
-    if (secondRound) {
+    choices[`choices_round_${round}`] = roundChoices
+
+    if (round == LAST_ROUND) {
       document.getElementById("submit-button").disabled = true;
 
-      sendCEData(low, high);
-
-      if (lotteryNum === 25) {
-        window.location.href = "/success"
-        return
-      }
-      
-      window.location.href = `/lottery/${lotteryNum + 1}`
+      // POST to Flask to store user choices for current lottery and redirect to the appropriate page
+      fetch(`/lottery/${lotteryNum}`, {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(choices)
+      })
+      .then(response => {
+        if (response.redirected) {
+          window.location.href = response.url
+        }
+      })
+      .catch(function(e){})
     }
 
     // Clear the table body and fill second round
     lotteries = generateLotteryRange(low, high, curLottery["second_round_step_size"]);
     fillLotteryRows(lotteries, tableBody);
-    secondRound = true
+    round++
   });
 }
 

@@ -1,3 +1,6 @@
 .venv/
 db.yaml
 .env
+__pycache__/
+.DS_Store
+flask_session/

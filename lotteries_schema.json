@@ -1,0 +1,14 @@
+[
+    {
+        "choices_round_1": ["Lottery", "Lottery", "Cash1", "Cash2"],
+        "choices_round_2": ["Lottery", "Lottery", "Cash1.5", "Cash1.6"]
+    },
+    {
+        "choices_round_1": ["Lottery", "Lottery", "Cash1", "Cash2"],
+        "choices_round_2": ["Lottery", "Lottery", "Cash1.5", "Cash1.6"]
+    },
+    {
+        "choices_round_1": ["Lottery", "Lottery", "Cash1", "Cash2"],
+        "choices_round_2": ["Lottery", "Lottery", "Cash1.5", "Cash1.6"]
+    }
+]
