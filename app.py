@@ -158,4 +158,4 @@ def user_choice():
 
 if __name__ == '__main__':
     #so that it keep refresing
-    app.run(debug=True)
+    app.run(debug=True, port=33507)
