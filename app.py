@@ -20,7 +20,9 @@ dotenv.load_dotenv()
 app = Flask(__name__)
 print(os.getenv("APP-SECRET-KEY"))
 
-app.secret_key = os.getenv("APP-SECRET-KEY")
+# app.secret_key = os.getenv("APP-SECRET-KEY")
+key = yaml.safe_load(open('secret.yaml'))
+app.secret_key = key['API_KEY']
 
 
 MAX_LOTTERY = 25
