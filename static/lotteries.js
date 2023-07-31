@@ -76,8 +76,6 @@ function handleRadioSelection(lotteries) {
     roundChoices.push(radio.value);
   });
 
-  // Display the selected values in an alert
-
   for (let i = 0; i < roundChoices.length - 1; i++) {
     // if there is a switch from cash to lottery
     if (roundChoices[i + 1] === "Lottery" && !isNaN(roundChoices[i])) {
@@ -111,7 +109,7 @@ function initializeLotteryTable(curLottery) {
   let low = curLottery["low"]
   let high = curLottery["high"]
   let roundChoices = []
-  let choices = {}
+  let choices = []
   let lotteries = generateLotteryRange(low, high, curLottery["first_round_step_size"]);
   fillLotteryRows(lotteries, tableBody);
 
@@ -125,7 +123,7 @@ function initializeLotteryTable(curLottery) {
       return
     }
 
-    choices[`choices_round_${round}`] = roundChoices
+    choices.push(roundChoices)
 
     if (round == LAST_ROUND) {
       document.getElementById("submit-button").disabled = true;
@@ -134,7 +132,11 @@ function initializeLotteryTable(curLottery) {
       fetch(`/lottery/${lotteryNum}`, {
         method: "POST",
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(choices)
+        body: JSON.stringify({
+          "lower_bound": low,
+          "upper_bound": high,
+          "choices": choices
+        })
       })
       .then(response => {
         if (response.redirected) {

@@ -1,5 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from flask_session import Session
+import psycopg2
+from db import conn
+import yaml
 import random
 import os
 import dotenv
@@ -9,6 +12,7 @@ app = Flask(__name__)
 app.secret_key = os.getenv("APP-SECRET-KEY")
 app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
+
 
 MAX_LOTTERY = 25
 DEBUG = False
@@ -30,6 +34,7 @@ def index():
     elif request.method == "POST":
         # determine if the user should be shown lottery visualization for this survey session
         visualization = random.random() < 0.5
+        session['lottery_num'] = 1
 
         session['user_info'] = {
             'first_name': request.form['first_name'],
@@ -42,7 +47,35 @@ def index():
             'taken_statistics': request.form['statistics'],
             'visualization': visualization,
         }
-        session['lottery_choices'] = [None] * MAX_LOTTERY
+        session['lotteries_choices'] = [None] * MAX_LOTTERY
+        cur = conn.cursor()
+        insert_query = """
+                        INSERT INTO user_info (first_name, last_name, student_id, class, instructor, major, university_year, taken_statistics, visualization)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING user_id
+                    """
+        user_info = session['user_info']
+
+        data = (
+            user_info['first_name'],
+            user_info['last_name'],
+            user_info['student_id'],
+            user_info['class'],
+            user_info['instructor'],
+            user_info['major'],
+            user_info['university_year'],
+            user_info['taken_statistics'],
+            user_info['visualization'],
+        )       
+        
+
+        cur.execute(insert_query,data)
+
+        user_id = cur.fetchone()[0]
+        # Save the user_id in the session for future use
+        session['user_id'] = user_id
+
+        conn.commit()
+        cur.close()
 
         if DEBUG:   
             print(session['user_info'])
@@ -63,21 +96,52 @@ def lottery(lottery_num=1):
     
     elif request.method == "POST":
         choices = request.get_json(silent=True)
-        session['lottery_choices'][lottery_num - 1] = choices # save user lottery choices for the lottery they completed
+        session['lotteries_choices'][lottery_num - 1] = choices # save user lottery choices for the lottery they completed
 
         if DEBUG:
             print(choices)
         
         if lottery_num == MAX_LOTTERY:
-            return redirect('/submit') # TODO: redirect to database submission which will then redirect to error or success
+            return redirect('/submit')
         
         return redirect(f'/lottery/{lottery_num + 1}')
     
 @app.route('/submit', methods=['GET'])
 def submit():
     if DEBUG:
-        print(session['lottery_choices'])
+        print(session['lotteries_choices'])
+    
+    for i, lottery in enumerate(session['lotteries_choices']):
+        save_single_lottery(data=lottery, lottery_num=i + 1)
+
     return render_template('/success.html')
+
+def save_single_lottery(data, lottery_num):
+    cur = conn.cursor()
+
+    choices_one = data.get('choices')[0]
+    choices_two = data.get('choices')[1]
+
+    lower_bound = data.get('lower_bound')
+    upper_bound = data.get('upper_bound')
+
+    ce = [lower_bound, upper_bound]
+    user_id = session.get('user_id')
+
+    print(choices_one)
+    print(choices_two)
+    print(ce)
+
+    insert_query = '''INSERT INTO lottery_response (user_id, lottery_num, first_round_response, second_round_response, ce)
+                VALUES (%s, %s, %s, %s, %s)'''
+    data = (user_id, lottery_num, choices_one, choices_two, ce)
+
+    cur.execute(insert_query,data)
+    # Commit the changes to the database
+    conn.commit()
+    cur.close()
+
+    return True
 
 if __name__ == '__main__':
     #so that it keep refresing
