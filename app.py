@@ -34,6 +34,11 @@ def index():
     elif request.method == "POST":
         # determine if the user should be shown lottery visualization for this survey session
         visualization = random.random() < 0.5
+
+        # randomly shuffled list from 1 to 25 for lottery page order
+        session['lottery_order'] = list(range(1, MAX_LOTTERY + 1))
+        random.shuffle(session['lottery_order'])
+
         session['lottery_num'] = 1
 
         session['user_info'] = {
@@ -79,8 +84,8 @@ def index():
 
         if DEBUG:   
             print(session['user_info'])
-
-        return redirect('/lottery')
+        print(session["lottery_order"])
+        return redirect(f'/lottery/{session["lottery_order"].pop()}')
     
 @app.route('/lottery', methods=['GET'])
 @app.route('/lottery/', methods=['GET'])
@@ -100,21 +105,35 @@ def lottery(lottery_num=1):
 
         if DEBUG:
             print(choices)
+            print(session["lottery_order"])
         
-        if lottery_num == MAX_LOTTERY:
+        if not session["lottery_order"]: # if no more lotteries to complete 
             return redirect('/submit')
         
-        return redirect(f'/lottery/{lottery_num + 1}')
+        return redirect(f'/lottery/{session["lottery_order"].pop()}')
     
 @app.route('/submit', methods=['GET'])
 def submit():
+    lotteries = session['lotteries_choices']
+
     if DEBUG:
-        print(session['lotteries_choices'])
+        print(lotteries)
+
+    incomplete_lotteries = []
+    for i, lottery in enumerate(lotteries):
+        if DEBUG:
+            print(i, lottery)
+        if lottery is None:
+            incomplete_lotteries.append(i + 1)
+
+    if incomplete_lotteries:
+        return render_template('/submit.html', message=f"Please complete lotteries {str(incomplete_lotteries)[1:-1]}")
     
-    for i, lottery in enumerate(session['lotteries_choices']):
+    for i, lottery in enumerate(lotteries):
         save_single_lottery(data=lottery, lottery_num=i + 1)
 
-    return render_template('/success.html')
+    success_message = 'Your participation in the survey means a lot to us. Thank you for taking the time to provide your feedback!'
+    return render_template('/submit.html', message=success_message)
 
 def save_single_lottery(data, lottery_num):
     cur = conn.cursor()
