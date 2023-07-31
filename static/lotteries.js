@@ -22,7 +22,7 @@ function fillLotteryRows(cashAmounts, tableBody) {
      const radioInputLottery = document.createElement("input");
      radioInputLottery.type = "radio";
      radioInputLottery.name = "choice" + index;
-     radioInputLottery.value = "Lottery";
+     radioInputLottery.value = cashAmount+"Lottery";
      radioInputLottery.id = "lottery" + index;
      radioInputLottery.required = true; // Added required attribute;
  
@@ -81,12 +81,12 @@ function handleRadioSelection(lotteries) {
 
   for (let i = 0; i < selectedValues.length - 1; i++) {
     // if there is a switch from cash to lottery
-    if (selectedValues[i + 1] === "Lottery" && selectedValues[i].includes("Cash")) {
+    if (selectedValues[i + 1].includes("Lottery") && selectedValues[i].includes("Cash")) {
       alert("Please switch from lottery to cash")
       return [-1, -1]
     }
     // if there is a switch from lottery to cash
-    if (selectedValues[i] === "Lottery" && selectedValues[i + 1].includes("Cash")) {
+    if (selectedValues[i].includes("Lottery") && selectedValues[i + 1].includes("Cash")) {
       //TODO: SEND SELECTED VALUES WITH ROUND AND LOTTERY NUMBER TO FLASK SESSION
       return [lotteries[i], lotteries[i + 1]]
     }
@@ -96,23 +96,37 @@ function handleRadioSelection(lotteries) {
   return [-1, -1]
 }
 
-// Function to generate a range of lotteries with a specified step size
-function generateLotteryRange(start, end, step) {
-  const range = [];
-  for (let i = start; i <= end; i += step) {
-    range.push(i);
+// Function to handle radio button selection
+function handleChoicesSelection(secondRound, round_one, round_two) {
+  const selectedValues = [];
+  const radios = document.querySelectorAll("input[type='radio']:checked");
+
+  radios.forEach((radio) => {
+    selectedValues.push(radio.value);
+    if (secondRound === false) {
+      round_one.push(radio.value);
+    } else {
+      round_two.push(radio.value);
+    }
+  });
+
+  if (secondRound === false) {
+    return round_one;
+  } else {
+    return round_two;
   }
-  return range;
+
 }
+
 
 // Function to send CE data to Flask
 // TODO: make this do something?
-function sendCEData(low, high) {
+function sendData(low, high, round_one, round_two) {
   const xhr = new XMLHttpRequest();
-  xhr.open("POST", "/ce-data", true);
+  xhr.open("POST", "/user-choice", true);
   xhr.setRequestHeader("Content-Type", "application/json");
 
-  const data = JSON.stringify({ lower_bound: low, upper_bound: high });
+  const data = JSON.stringify({ lower_bound: low, upper_bound: high, choices_one: round_one, choices_two: round_two});
 
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4 && xhr.status === 200) {
@@ -124,12 +138,23 @@ function sendCEData(low, high) {
   xhr.send(data);
 }
 
+// Function to generate a range of lotteries with a specified step size
+function generateLotteryRange(start, end, step) {
+  const range = [];
+  for (let i = start; i <= end; i += step) {
+    range.push(i);
+  }
+  return range;
+}
+
 // Initialize the lottery table and handle form submission
 function initializeLotteryTable(curLottery) {
   const tableBody = document.getElementById("tbody");
-  let secondRound = false
+  let secondRound = false;
   let low = curLottery["low"]
   let high = curLottery["high"]
+  let round_one = [];
+  let round_two = [];
   let lotteries = generateLotteryRange(low, high, curLottery["first_round_step_size"]);
   fillLotteryRows(lotteries, tableBody);
 
@@ -140,6 +165,13 @@ function initializeLotteryTable(curLottery) {
     [low, high] = handleRadioSelection(lotteries);
     alert(`${low}, ${high}`)
 
+    if(secondRound == false){
+      round_one = handleChoicesSelection(secondRound,round_one,round_two);
+    }else{
+      round_two = handleChoicesSelection(secondRound,round_one,round_two);
+    }
+
+
     if (low === -1 || high === -1) {
       return
     }
@@ -147,7 +179,9 @@ function initializeLotteryTable(curLottery) {
     if (secondRound) {
       document.getElementById("submit-button").disabled = true;
 
-      sendCEData(low, high);
+      //send data back to flask
+      sendData(low, high, round_one, round_two);
+      //sendUserChoices();
 
       if (lotteryNum === 25) {
         window.location.href = "/success"
