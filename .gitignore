@@ -1,5 +1,5 @@
 .venv/
 db.yaml
-env
+.env
 secret.yaml
 db.py

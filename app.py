@@ -129,7 +129,7 @@ def user_choice():
     upper_bound = data.get('upper_bound')
 
     # lottery_num will be stored in the session as shown in the previous answer
-    lottery_num = session.get('lottery_num')
+    lottery_num = session.get('lottery_num',1)
 
     ce = [lower_bound, upper_bound]
     user_id = session.get('user_id')
@@ -137,14 +137,15 @@ def user_choice():
     print(choices_one)
     print(choices_two)
     print(ce)
+    # Retrieve the current value of lottery_num from the session and add one
+    lottery_num +=1
+    session['lottery_num'] = lottery_num
 
     insert_query = '''INSERT INTO lottery_response (user_id, lottery_num, first_round_response, second_round_response, ce)
                 VALUES (%s, %s, %s, %s, %s)'''
     data = (user_id, lottery_num, choices_one, choices_two, ce)
 
-    # Retrieve the current value of lottery_num from the session and add one
-    lottery_num +=1
-    session['lottery_num'] = lottery_num
+    
 
     cur.execute(insert_query,data)
     # Commit the changes to the database
