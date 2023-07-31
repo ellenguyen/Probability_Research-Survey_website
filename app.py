@@ -4,7 +4,6 @@ from flask import Flask, render_template, request, redirect, url_for, session, j
 
 # install pip install Flask psycopg2-binary
 import psycopg2
-from db import conn
 
 # install pip install pyyaml
 import yaml
