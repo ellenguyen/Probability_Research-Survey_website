@@ -13,8 +13,8 @@ import random
 
 import os
 
-import dotenv
-dotenv.load_dotenv()
+# import dotenv
+# dotenv.load_dotenv()
 
 app = Flask(__name__)
 print(os.getenv("APP-SECRET-KEY"))
