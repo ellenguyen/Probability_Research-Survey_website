@@ -4,7 +4,6 @@ from flask import Flask, render_template, request, redirect, url_for, session, j
 
 # install pip install Flask psycopg2-binary
 import psycopg2
-from db import conn
 
 # install pip install pyyaml
 import yaml
@@ -14,15 +13,17 @@ import random
 
 import os
 
-import dotenv
-dotenv.load_dotenv()
+# import dotenv
+# dotenv.load_dotenv()
 
 app = Flask(__name__)
 print(os.getenv("APP-SECRET-KEY"))
 
 # app.secret_key = os.getenv("APP-SECRET-KEY")
-key = yaml.safe_load(open('secret.yaml'))
-app.secret_key = key['API_KEY']
+
+app.secret_key = "f27ea7e7486e5286a72cc9699c59b303"
+
+conn = psycopg2.connect("postgresql://postgres:Play279265!!@db.jpippqfaehsfnslrdria.supabase.co:5432/postgres")
 
 
 MAX_LOTTERY = 25
