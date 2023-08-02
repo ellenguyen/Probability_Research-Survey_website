@@ -1,7 +1,6 @@
 # import libraries to redirect to different page layouts
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 
-
 # install pip install Flask psycopg2-binary
 import psycopg2
 
@@ -17,13 +16,11 @@ import os
 # dotenv.load_dotenv()
 
 app = Flask(__name__)
+
 print(os.getenv("APP-SECRET-KEY"))
 
-# app.secret_key = os.getenv("APP-SECRET-KEY")
+app.secret_key = os.getenv("APP-SECRET-KEY")
 
-app.secret_key = "f27ea7e7486e5286a72cc9699c59b303"
-
-conn = psycopg2.connect("postgresql://postgres:Play279265!!@db.jpippqfaehsfnslrdria.supabase.co:5432/postgres")
 
 
 MAX_LOTTERY = 25
@@ -46,7 +43,7 @@ def index():
     elif request.method == "POST":
         # randomize the text/visual lotteries
         visualization = random.random() < 0.5
-        session['lottery_num'] = 1
+        session['lottery_num'] = 0
 
         session['user_info'] = {
             'first_name': request.form['first_name'],
@@ -129,7 +126,7 @@ def user_choice():
     upper_bound = data.get('upper_bound')
 
     # lottery_num will be stored in the session as shown in the previous answer
-    lottery_num = session.get('lottery_num',1)
+    lottery_num = session.get('lottery_num')
 
     ce = [lower_bound, upper_bound]
     user_id = session.get('user_id')

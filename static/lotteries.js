@@ -67,7 +67,6 @@ function fillLotteryRows(cashAmounts, tableBody) {
 }
 
 // Function to handle radio button selection
-
 function handleRadioSelection(lotteries) {
   const selectedValues = [];
   const radios = document.querySelectorAll("input[type='radio']:checked");
@@ -80,20 +79,22 @@ function handleRadioSelection(lotteries) {
   alert("Selected values: " + selectedValues.join(", "));
 
   for (let i = 0; i < selectedValues.length - 1; i++) {
-    // if there is a switch from cash to lottery
-    if (selectedValues[i + 1].includes("Lottery") && selectedValues[i].includes("Cash")) {
-      alert("Please switch from lottery to cash")
-      return [-1, -1]
-    }
+    
     // if there is a switch from lottery to cash
     if (selectedValues[i].includes("Lottery") && selectedValues[i + 1].includes("Cash")) {
       //TODO: SEND SELECTED VALUES WITH ROUND AND LOTTERY NUMBER TO FLASK SESSION
       return [lotteries[i], lotteries[i + 1]]
     }
+    // if the user pick all cash the upper and lower bound would be the first two 
+    else if (selectedValues[i].includes("Cash") && selectedValues[i + 1].includes("Cash")) {
+      return [lotteries[i], lotteries[i + 1]]
+    }
+    //if teh user pick all lottery the upper and lower bound would be the last two
+    else if(selectedValues[selectedValues.length - 1].includes("Lottery") && selectedValues[selectedValues.length - 2].includes("Lottery")){
+      return [lotteries[selectedValues.length - 2], lotteries[selectedValues.length - 1] ]
+    }
   }
 
-  alert("Please choose a difference");
-  return [-1, -1]
 }
 
 // Function to handle radio button selection
@@ -123,20 +124,22 @@ function handleChoicesSelection(secondRound, round_one, round_two) {
 // TODO: make this do something?
 function sendData(low, high, round_one, round_two) {
   const xhr = new XMLHttpRequest();
-  xhr.open("POST", "/user-choice", true);
+  xhr.open("POST", "/user-choice", false); // Set to false for synchronous request
   xhr.setRequestHeader("Content-Type", "application/json");
 
-  const data = JSON.stringify({ lower_bound: low, upper_bound: high, choices_one: round_one, choices_two: round_two});
-
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-      // Request completed successfully
-      console.log(xhr.responseText);
-    }
-  };
+  const data = JSON.stringify({ lower_bound: low, upper_bound: high, choices_one: round_one, choices_two: round_two });
 
   xhr.send(data);
+
+  if (xhr.readyState === 4 && xhr.status === 200) {
+    // Request completed successfully
+    console.log(xhr.responseText);
+  } else {
+    // Request failed or encountered an error
+    console.error("Failed to send data:", xhr.status, xhr.statusText);
+  }
 }
+
 
 // Function to generate a range of lotteries with a specified step size
 function generateLotteryRange(start, end, step) {
