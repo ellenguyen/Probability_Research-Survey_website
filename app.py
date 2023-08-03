@@ -1,6 +1,7 @@
 # required libraries
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from flask_session import Session
+from db import conn
 import psycopg2
 import yaml
 import random
@@ -52,6 +53,35 @@ def index():
             'visualization': visualization,
         }
         session['lotteries_choices'] = [None] * MAX_LOTTERY
+
+        cur = conn.cursor()
+
+        insert_query = """
+                        INSERT INTO user_info (first_name, last_name, student_id, class, instructor, major, university_year, taken_statistics, visualization)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING user_id
+                    """
+        user_info = session['user_info']
+
+        data = (
+            user_info['first_name'],
+            user_info['last_name'],
+            user_info['student_id'],
+            user_info['class'],
+            user_info['instructor'],
+            user_info['major'],
+            user_info['university_year'],
+            user_info['taken_statistics'],
+            user_info['visualization'],
+        )       
+        
+        cur.execute(insert_query,data)
+
+        user_id = cur.fetchone()[0]
+        # Save the user_id in the session for future use
+        session['user_id'] = user_id
+
+        conn.commit()
+        cur.close()
 
         if DEBUG:   
             print(session['user_info'])
