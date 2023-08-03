@@ -1,6 +1,5 @@
 # import libraries to redirect to different page layouts
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
-import time
 
 # install pip install Flask psycopg2-binary
 import psycopg2
@@ -13,9 +12,6 @@ import os
 
 app = Flask(__name__)
 
-
-app.secret_key = "f27ea7e7486e5286a72cc9699c59b303"
-conn = psycopg2.connect("postgresql://postgres:Play279265!!@db.jpippqfaehsfnslrdria.supabase.co:5432/postgres")
 
 
 
@@ -91,6 +87,7 @@ def index():
         return redirect('/lottery')
 
 LOTTERIES = 24    
+
 available_lotteries = list(range(1, MAX_LOTTERY))
 @app.route('/lottery', methods=['GET'])
 @app.route('/lottery/', methods=['GET'])
@@ -107,6 +104,7 @@ def lottery(lottery_num=1):
     LOTTERIES -= 1
     lottery_num = available_lotteries.pop(rand)
     lottery_num = str(lottery_num)
+
     session['lottery_num'] = lottery_num
 
     print(len(available_lotteries))

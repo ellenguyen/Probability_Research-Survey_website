@@ -148,8 +148,22 @@ function generateLotteryRange(start, end, step) {
   return range;
 }
 
+function showPrompt() {
+  return "Are you sure you want to leave? Your changes may not be saved.";
+}
+
+function confirmPageRefresh() {
+  // Attach the beforeunload event to the window object
+  window.addEventListener('beforeunload', function (event) {
+    // Display the prompt message by calling the showPrompt function
+    event.returnValue = showPrompt();
+  });
+}
+
+
 // Initialize the lottery table and handle form submission
 function initializeLotteryTable(curLottery) {
+
   const tableBody = document.getElementById("tbody");
   let secondRound = false;
   let low = curLottery["low"]
@@ -187,7 +201,7 @@ function initializeLotteryTable(curLottery) {
         window.location.href = "/success"
         return
       }
-      
+      confirmPageRefresh();
       window.location.href = `/lottery/${lotteryNum + 1}`
     }
 
@@ -211,9 +225,13 @@ async function loadLottery(lotteryIndex) {
   let lotteryData = await getLotteryData()
   let curLottery = lotteryData[lotteryIndex]
 
-  const taskName = document.getElementById("task-name")
+  
+  let taskName = document.getElementById("task-name")
   // TODO: fix task number
   taskName.innerText = `TASK ${lotteryIndex + 1}:`
+
+
+  
 
   const lotteryDescription = document.getElementById("lottery-description")
   lotteryDescription.innerText = `You receive $${curLottery["high"]} with probability ${parseInt(curLottery["probability_high"] * 100)}% and $${curLottery["low"]} with probability ${parseInt((1 - curLottery["probability_high"]) * 100)}%.`
