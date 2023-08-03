@@ -94,15 +94,6 @@ h1 {
   flex-direction: column; /* Stack children vertically */
   align-items: center; /* Horizontally center the children */
   border: 3px solid rgb(36, 92, 247);
-  width: 20%;
-  padding: 10px;
-}
-#lottery-description{
-  display: flex;
-  flex-direction: column; /* Stack children vertically */
-  align-items: center; /* Horizontally center the children */
-  text-align: center;
-
 }
 
 /* title for Task 1 */
@@ -111,7 +102,7 @@ h1 {
   display: flex;
   justify-content: center;
   margin-top: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 /* make the input as a box */
