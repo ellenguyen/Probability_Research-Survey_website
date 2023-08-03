@@ -1,27 +1,21 @@
 # import libraries to redirect to different page layouts
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify, json
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 
 # install pip install Flask psycopg2-binary
 import psycopg2
-from db import conn
 
 # install pip install pyyaml
 import yaml
-
-# library to randomly redirect users
 import random
-
 import os
 
-# import dotenv
-# dotenv.load_dotenv()
 
 app = Flask(__name__)
 
-print(os.getenv("APP-SECRET-KEY"))
 
-# app.secret_key = os.getenv("APP-SECRET-KEY")
 app.secret_key = "f27ea7e7486e5286a72cc9699c59b303"
+conn = psycopg2.connect("postgresql://postgres:Play279265!!@db.jpippqfaehsfnslrdria.supabase.co:5432/postgres")
+
 
 
 MAX_LOTTERY = 25
@@ -44,9 +38,10 @@ def index():
         return render_template("index.html",classes=classes)
 
     elif request.method == "POST":
-        # randomize the text/visual lotteries
+        # determine if the user should be shown lottery visualization for this survey session
         visualization = random.random() < 0.5
-        session['lottery_num'] = 0
+
+        session['lottery_num'] = 1
 
         session['user_info'] = {
             'first_name': request.form['first_name'],
@@ -57,9 +52,12 @@ def index():
             'major': request.form['major'],
             'university_year': request.form['university_year'],
             'taken_statistics': request.form['statistics'],
-            'visualization': visualization
+            'visualization': visualization,
         }
+        session['lotteries_choices'] = [None] * MAX_LOTTERY
+
         cur = conn.cursor()
+
         insert_query = """
                         INSERT INTO user_info (first_name, last_name, student_id, class, instructor, major, university_year, taken_statistics, visualization)
                         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING user_id
@@ -78,7 +76,6 @@ def index():
             user_info['visualization'],
         )       
         
-
         cur.execute(insert_query,data)
 
         user_id = cur.fetchone()[0]
@@ -88,31 +85,42 @@ def index():
         conn.commit()
         cur.close()
 
-        
-
         if DEBUG:   
             print(session['user_info'])
 
         return redirect('/lottery')
-    
+
+LOTTERIES = 24    
+available_lotteries = list(range(1, MAX_LOTTERY))
 @app.route('/lottery', methods=['GET'])
 @app.route('/lottery/', methods=['GET'])
 @app.route('/lottery/<lottery_num>', methods=['GET', 'POST'])
-def lottery(lottery_num = 0):
-    if 'user_info' not in session or int(lottery_num) > MAX_LOTTERY:
-        return redirect(url_for('index'))
+def lottery(lottery_num=1):
+    #Generate a list of all available lotteries
+    global LOTTERIES
+    
+    print(available_lotteries)
+    print(MAX_LOTTERY)
+    #index so i can remove
+    rand = random.randint(0, LOTTERIES-1)
+    
+    LOTTERIES -= 1
+    lottery_num = available_lotteries.pop(rand)
+    lottery_num = str(lottery_num)
+    print(len(available_lotteries))
 
-    return render_template("/lotteries.html", lottery_num=lottery_num, lottery_image=f'Lottery_{f"{lottery_num:0>2}"}.jpg', visualization=session['user_info']['visualization'])
-
-@app.route("/success")
-def success():
-    return render_template("success.html")
-
-# determine if the user should be shown lottery visualization for this survey session
-# def set_visualization_session():
-#     session['visualization'] = random.random() < 0.5
+    if len(available_lotteries) < 1:
+        lottery_num = 25
 
 
+    if request.method == "GET":
+        if 'user_info' not in session or int(lottery_num) > MAX_LOTTERY:
+            return redirect(url_for('index'))
+
+
+
+        return render_template("/lotteries.html", lottery_num=lottery_num, lottery_image=f'Lottery_{f"{lottery_num:0>2}"}.jpg', visualization=session['user_info']['visualization'])
+    
 
 #get user choices from javasript to flask
 @app.route("/user-choice", methods=['POST'])
@@ -128,7 +136,6 @@ def user_choice():
 
     # lottery_num will be stored in the session as shown in the previous answer
     lottery_num = session.get('lottery_num')
-    print("lottery num", lottery_num)
 
     ce = [lower_bound, upper_bound]
     user_id = session.get('user_id')
@@ -144,19 +151,20 @@ def user_choice():
                 VALUES (%s, %s, %s, %s, %s)'''
     data = (user_id, lottery_num, choices_one, choices_two, ce)
 
-    
-
     cur.execute(insert_query,data)
     # Commit the changes to the database
     conn.commit()
     cur.close()
 
-    
-
     return jsonify(success=True)
 
+    
+@app.route('/success', methods=['GET'])
+def success():
 
+    success_message = 'Your participation in the survey means a lot to us. Thank you for taking the time to provide your feedback!'
+    return render_template('/success.html', message=success_message)
 
+# keep running
 if __name__ == '__main__':
-    #so that it keep refresing
     app.run(debug=True)

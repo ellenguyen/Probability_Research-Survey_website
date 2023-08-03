@@ -76,7 +76,7 @@ function handleRadioSelection(lotteries) {
   });
 
   // Display the selected values in an alert
-  alert("Selected values: " + selectedValues.join(", "));
+  // alert("Selected values: " + selectedValues.join(", "));
 
   for (let i = 0; i < selectedValues.length - 1; i++) {
     
@@ -119,7 +119,6 @@ function handleChoicesSelection(secondRound, round_one, round_two) {
 
 }
 
-
 // Function to send CE data to Flask
 // TODO: make this do something?
 function sendData(low, high, round_one, round_two) {
@@ -139,7 +138,6 @@ function sendData(low, high, round_one, round_two) {
     console.error("Failed to send data:", xhr.status, xhr.statusText);
   }
 }
-
 
 // Function to generate a range of lotteries with a specified step size
 function generateLotteryRange(start, end, step) {
@@ -166,14 +164,13 @@ function initializeLotteryTable(curLottery) {
     event.preventDefault(); // Prevent the form from submitting
 
     [low, high] = handleRadioSelection(lotteries);
-    alert(`${low}, ${high}`)
+    // alert(`${low}, ${high}`)
 
     if(secondRound == false){
       round_one = handleChoicesSelection(secondRound,round_one,round_two);
     }else{
       round_two = handleChoicesSelection(secondRound,round_one,round_two);
     }
-
 
     if (low === -1 || high === -1) {
       return
@@ -215,6 +212,7 @@ async function loadLottery(lotteryIndex) {
   let curLottery = lotteryData[lotteryIndex]
 
   const taskName = document.getElementById("task-name")
+  // TODO: fix task number
   taskName.innerText = `TASK ${lotteryIndex + 1}:`
 
   const lotteryDescription = document.getElementById("lottery-description")
