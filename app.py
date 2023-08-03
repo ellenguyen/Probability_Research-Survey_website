@@ -1,8 +1,9 @@
 # import libraries to redirect to different page layouts
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify, json
 
 # install pip install Flask psycopg2-binary
 import psycopg2
+from db import conn
 
 # install pip install pyyaml
 import yaml
@@ -19,8 +20,8 @@ app = Flask(__name__)
 
 print(os.getenv("APP-SECRET-KEY"))
 
-app.secret_key = os.getenv("APP-SECRET-KEY")
-
+# app.secret_key = os.getenv("APP-SECRET-KEY")
+app.secret_key = "f27ea7e7486e5286a72cc9699c59b303"
 
 
 MAX_LOTTERY = 25
@@ -37,7 +38,9 @@ classes = [
 def index():
     if DEBUG:
         session.clear()
+
     if request.method == "GET": 
+        
         return render_template("index.html",classes=classes)
 
     elif request.method == "POST":
@@ -95,11 +98,9 @@ def index():
 @app.route('/lottery', methods=['GET'])
 @app.route('/lottery/', methods=['GET'])
 @app.route('/lottery/<lottery_num>', methods=['GET', 'POST'])
-def lottery(lottery_num=1):
+def lottery(lottery_num = 0):
     if 'user_info' not in session or int(lottery_num) > MAX_LOTTERY:
         return redirect(url_for('index'))
-    print(session['user_info'])
-
 
     return render_template("/lotteries.html", lottery_num=lottery_num, lottery_image=f'Lottery_{f"{lottery_num:0>2}"}.jpg', visualization=session['user_info']['visualization'])
 
@@ -127,6 +128,7 @@ def user_choice():
 
     # lottery_num will be stored in the session as shown in the previous answer
     lottery_num = session.get('lottery_num')
+    print("lottery num", lottery_num)
 
     ce = [lower_bound, upper_bound]
     user_id = session.get('user_id')
