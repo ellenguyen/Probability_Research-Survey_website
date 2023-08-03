@@ -1,5 +1,6 @@
 # import libraries to redirect to different page layouts
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+import time
 
 # install pip install Flask psycopg2-binary
 import psycopg2
@@ -54,7 +55,6 @@ def index():
             'taken_statistics': request.form['statistics'],
             'visualization': visualization,
         }
-        session['lotteries_choices'] = [None] * MAX_LOTTERY
 
         cur = conn.cursor()
 
@@ -107,6 +107,8 @@ def lottery(lottery_num=1):
     LOTTERIES -= 1
     lottery_num = available_lotteries.pop(rand)
     lottery_num = str(lottery_num)
+    session['lottery_num'] = lottery_num
+
     print(len(available_lotteries))
 
     if len(available_lotteries) < 1:
@@ -136,6 +138,7 @@ def user_choice():
 
     # lottery_num will be stored in the session as shown in the previous answer
     lottery_num = session.get('lottery_num')
+    print("this is the cur loltterry num", lottery_num)
 
     ce = [lower_bound, upper_bound]
     user_id = session.get('user_id')
@@ -144,8 +147,8 @@ def user_choice():
     print(choices_two)
     print(ce)
     # Retrieve the current value of lottery_num from the session and add one
-    lottery_num +=1
-    session['lottery_num'] = lottery_num
+
+    #session['lottery_num'] = lottery_num
 
     insert_query = '''INSERT INTO lottery_response (user_id, lottery_num, first_round_response, second_round_response, ce)
                 VALUES (%s, %s, %s, %s, %s)'''
