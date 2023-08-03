@@ -148,19 +148,6 @@ function generateLotteryRange(start, end, step) {
   return range;
 }
 
-function showPrompt() {
-  return "Are you sure you want to leave? Your changes may not be saved.";
-}
-
-function confirmPageRefresh() {
-  // Attach the beforeunload event to the window object
-  window.addEventListener('beforeunload', function (event) {
-    // Display the prompt message by calling the showPrompt function
-    event.returnValue = showPrompt();
-  });
-}
-
-
 // Initialize the lottery table and handle form submission
 function initializeLotteryTable(curLottery) {
 
@@ -172,6 +159,12 @@ function initializeLotteryTable(curLottery) {
   let round_two = [];
   let lotteries = generateLotteryRange(low, high, curLottery["first_round_step_size"]);
   fillLotteryRows(lotteries, tableBody);
+  // Add beforeunload event listener to show warning when the page is reloaded
+    // Add beforeunload event listener to show alert when the page is reloaded
+  window.addEventListener("beforeunload", function (event) {
+    event.preventDefault();
+    event.returnValue = "Warning: Reloading this page may cause loss of data.";
+  });
 
   const form = document.getElementById("lotteryForm");
   form.addEventListener("submit", function(event) {
@@ -226,12 +219,9 @@ async function loadLottery(lotteryIndex) {
   let curLottery = lotteryData[lotteryIndex]
 
   
-  let taskName = document.getElementById("task-name")
+  const taskName = document.getElementById("task-name")
   // TODO: fix task number
   taskName.innerText = `TASK ${lotteryIndex + 1}:`
-
-
-  
 
   const lotteryDescription = document.getElementById("lottery-description")
   lotteryDescription.innerText = `You receive $${curLottery["high"]} with probability ${parseInt(curLottery["probability_high"] * 100)}% and $${curLottery["low"]} with probability ${parseInt((1 - curLottery["probability_high"]) * 100)}%.`
@@ -240,16 +230,11 @@ async function loadLottery(lotteryIndex) {
 }
 
 document.addEventListener("DOMContentLoaded", async function() {
+  // Attach the beforeunload event to prevent page reload
+
   loadLottery(lotteryNum - 1)
 });
 
 // refreshes the page whenever it is shown.
 // when using back and forward buttons in browser, state is usually saved which causes problems with lottery display after submission
 // TODO: Find a better solution than this
-(function () {
-  window.onpageshow = function(event) {
-      if (event.persisted) {
-          window.location.reload();
-      }
-  };
-})();
