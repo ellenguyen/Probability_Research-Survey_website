@@ -159,12 +159,6 @@ function initializeLotteryTable(curLottery) {
   let round_two = [];
   let lotteries = generateLotteryRange(low, high, curLottery["first_round_step_size"]);
   fillLotteryRows(lotteries, tableBody);
-  // Add beforeunload event listener to show warning when the page is reloaded
-    // Add beforeunload event listener to show alert when the page is reloaded
-  window.addEventListener("beforeunload", function (event) {
-    event.preventDefault();
-    event.returnValue = "Warning: Reloading this page may cause loss of data.";
-  });
 
   const form = document.getElementById("lotteryForm");
   form.addEventListener("submit", function(event) {
@@ -194,7 +188,6 @@ function initializeLotteryTable(curLottery) {
         window.location.href = "/success"
         return
       }
-      confirmPageRefresh();
       window.location.href = `/lottery/${lotteryNum + 1}`
     }
 
@@ -237,4 +230,16 @@ document.addEventListener("DOMContentLoaded", async function() {
 
 // refreshes the page whenever it is shown.
 // when using back and forward buttons in browser, state is usually saved which causes problems with lottery display after submission
-// TODO: Find a better solution than this
+window.addEventListener('beforeunload', function (event) {
+  // Customize the message you want to show to the user
+  const confirmationMessage = 'Are you sure you want to leave this page?';
+
+  // Most browsers will display the message provided in confirmationMessage
+  // Note that not all browsers will display the custom message, and will instead show a default message.
+
+  // Set the custom message in the event object
+  event.returnValue = confirmationMessage;
+
+  // Return the message
+  return confirmationMessage;
+});
