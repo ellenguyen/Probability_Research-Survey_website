@@ -148,9 +148,10 @@ function generateLotteryRange(start, end, step) {
   return range;
 }
 
+
 // Initialize the lottery table and handle form submission
 function initializeLotteryTable(curLottery) {
-
+  let count = 0;
   const tableBody = document.getElementById("tbody");
   let secondRound = false;
   let low = curLottery["low"]
@@ -182,12 +183,16 @@ function initializeLotteryTable(curLottery) {
 
       //send data back to flask
       sendData(low, high, round_one, round_two);
-      //sendUserChoices();
 
       if (lotteryNum === 25) {
         window.location.href = "/success"
         return
       }
+      
+      // if (count === 25) {
+      //   window.location.href = "/success"
+      //   return
+      // }
       window.location.href = `/lottery/${lotteryNum + 1}`
     }
 
@@ -195,7 +200,11 @@ function initializeLotteryTable(curLottery) {
     lotteries = generateLotteryRange(low, high, curLottery["second_round_step_size"]);
     fillLotteryRows(lotteries, tableBody);
     secondRound = true
+    // count += 1
+    
   });
+
+  //window.addEventListener('beforeunload', beforeUnloadEvent);
 }
 
 async function getLotteryData() {
@@ -223,23 +232,26 @@ async function loadLottery(lotteryIndex) {
 }
 
 document.addEventListener("DOMContentLoaded", async function() {
-  // Attach the beforeunload event to prevent page reload
-
   loadLottery(lotteryNum - 1)
 });
 
 // refreshes the page whenever it is shown.
 // when using back and forward buttons in browser, state is usually saved which causes problems with lottery display after submission
+
+// Add the 'beforeunload' event listener
 window.addEventListener('beforeunload', function (event) {
-  // Customize the message you want to show to the user
-  const confirmationMessage = 'Are you sure you want to leave this page?';
+  const submitButton = document.getElementById("submit-button");
 
-  // Most browsers will display the message provided in confirmationMessage
-  // Note that not all browsers will display the custom message, and will instead show a default message.
+  // Check if the form is submitted before showing the warning
+  if (!submitButton.disabled) {
+    const confirmationMessage = 'Are you sure you want to leave this page?';
+    event.returnValue = confirmationMessage;
+    return confirmationMessage;
+  }
+});
 
-  // Set the custom message in the event object
-  event.returnValue = confirmationMessage;
-
-  // Return the message
-  return confirmationMessage;
+// Add an event listener to the submit button to disable the warning
+const submitButton = document.getElementById("submit-button");
+submitButton.addEventListener("click", function() {
+  window.removeEventListener('beforeunload', beforeUnloadEvent);
 });

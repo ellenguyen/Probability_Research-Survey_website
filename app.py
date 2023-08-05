@@ -12,8 +12,7 @@ import os
 
 app = Flask(__name__)
 
-app.secret_key = "f27ea7e7486e5286a72cc9699c59b303"
-conn = psycopg2.connect("postgresql://postgres:Play279265!!@db.jpippqfaehsfnslrdria.supabase.co:5432/postgres")
+
 
 
 MAX_LOTTERY = 25
@@ -95,11 +94,21 @@ def index():
         if DEBUG:   
             print(session['user_info'])
 
-        return redirect('/lottery')
+        return redirect('/instruction')
+        #return redirect('/lottery')
+    
+@app.route('/instruction', methods=['GET', 'POST'])
+def instruction():
+    # Check if the user has provided user_info, otherwise redirect them to the index page
+    if request.method == "GET":
+        return render_template('instruction.html')
+    
+    elif request.method == "POST":
+        return redirect(url_for('lottery'))
 
 LOTTERIES = 24    
-
 available_lotteries = list(range(1, MAX_LOTTERY))
+
 @app.route('/lottery', methods=['GET'])
 @app.route('/lottery/', methods=['GET'])
 @app.route('/lottery/<lottery_num>', methods=['GET', 'POST'])
@@ -110,15 +119,19 @@ def lottery(lottery_num=1):
     print(available_lotteries)
     print(MAX_LOTTERY)
     #index so i can remove
-    rand = random.randint(0, LOTTERIES-1)
+    if(len(available_lotteries) != 0):
+        rand = random.randint(0, LOTTERIES-1)
+        lottery_num = available_lotteries.pop(rand)
+        print("randon", rand)
     
     LOTTERIES -= 1
-    lottery_num = available_lotteries.pop(rand)
+    
+    print("lottery_num", lottery_num)
     lottery_num = str(lottery_num)
 
     session['lottery_num'] = lottery_num
 
-    print(len(available_lotteries))
+    print("length", len(available_lotteries))
 
     if len(available_lotteries) < 1:
         lottery_num = 25
@@ -127,8 +140,6 @@ def lottery(lottery_num=1):
     if request.method == "GET":
         if 'user_info' not in session or int(lottery_num) > MAX_LOTTERY:
             return redirect(url_for('index'))
-
-
 
         return render_template("/lotteries.html", lottery_num=lottery_num, lottery_image=f'Lottery_{f"{lottery_num:0>2}"}.jpg', visualization=session['user_info']['visualization'])
     
