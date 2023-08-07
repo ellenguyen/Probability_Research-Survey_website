@@ -148,10 +148,9 @@ function generateLotteryRange(start, end, step) {
   return range;
 }
 
-
 // Initialize the lottery table and handle form submission
 function initializeLotteryTable(curLottery) {
-  let count = 0;
+
   const tableBody = document.getElementById("tbody");
   let secondRound = false;
   let low = curLottery["low"]
@@ -174,37 +173,33 @@ function initializeLotteryTable(curLottery) {
       round_two = handleChoicesSelection(secondRound,round_one,round_two);
     }
 
-    if (low === -1 || high === -1) {
-      return
-    }
-
     if (secondRound) {
       document.getElementById("submit-button").disabled = true;
 
       //send data back to flask
       sendData(low, high, round_one, round_two);
 
-      if (lotteryNum === 25) {
-        window.location.href = "/success"
-        return
-      }
-      
-      // if (count === 25) {
+      // if (lotteryNum === 25) {
       //   window.location.href = "/success"
       //   return
       // }
-      window.location.href = `/lottery/${lotteryNum + 1}`
-    }
 
+      if (currentLotteryIndex === 25) {
+        window.location.href = "/success";
+        return;
+      }
+
+
+      window.location.href = `/lottery/${lotteryNum+1}`
+      
+    }
+  
     // Clear the table body and fill second round
     lotteries = generateLotteryRange(low, high, curLottery["second_round_step_size"]);
     fillLotteryRows(lotteries, tableBody);
     secondRound = true
-    // count += 1
-    
-  });
 
-  //window.addEventListener('beforeunload', beforeUnloadEvent);
+  });
 }
 
 async function getLotteryData() {
@@ -216,14 +211,32 @@ async function getLotteryData() {
   .catch(error => console.error('Error fetching lottery data:', error));
 }
 
-async function loadLottery(lotteryIndex) {
+let currentLotteryIndex = 0; // Global variable to track the current lottery index
+
+// Function to get the current lottery index from sessionStorage
+function getCurrentLotteryIndex() {
+  let storedIndex = sessionStorage.getItem("currentLotteryIndex");
+  if (storedIndex) {
+    return parseInt(storedIndex);
+  } else {
+    return 1; // Default value if not found in sessionStorage
+  }
+}
+
+// Function to save the current lottery index to sessionStorage
+function saveCurrentLotteryIndex(index) {
+  sessionStorage.setItem("currentLotteryIndex", index);
+}
+
+async function loadLottery(lotteryIndex, Index) {
   let lotteryData = await getLotteryData()
   let curLottery = lotteryData[lotteryIndex]
 
   
   const taskName = document.getElementById("task-name")
   // TODO: fix task number
-  taskName.innerText = `TASK ${lotteryIndex + 1}:`
+  //taskName.innerText = `TASK ${lotteryIndex + 1}:`
+  taskName.innerText = `TASK ${Index}:`
 
   const lotteryDescription = document.getElementById("lottery-description")
   lotteryDescription.innerText = `You receive $${curLottery["high"]} with probability ${parseInt(curLottery["probability_high"] * 100)}% and $${curLottery["low"]} with probability ${parseInt((1 - curLottery["probability_high"]) * 100)}%.`
@@ -232,8 +245,18 @@ async function loadLottery(lotteryIndex) {
 }
 
 document.addEventListener("DOMContentLoaded", async function() {
-  loadLottery(lotteryNum - 1)
+  //loadLottery(lotteryNum - 1)
+    // Get the current lottery index from sessionStorage
+  currentLotteryIndex = getCurrentLotteryIndex();
+  // alert(currentLotteryIndex);
+
+  // Load the lottery with the current index
+  loadLottery(lotteryNum - 1, currentLotteryIndex);
+
+  // Save the current index + 1 for the next visit
+  saveCurrentLotteryIndex(currentLotteryIndex+1);
 });
+
 
 // refreshes the page whenever it is shown.
 // when using back and forward buttons in browser, state is usually saved which causes problems with lottery display after submission
@@ -251,7 +274,7 @@ window.addEventListener('beforeunload', function (event) {
 });
 
 // Add an event listener to the submit button to disable the warning
-const submitButton = document.getElementById("submit-button");
-submitButton.addEventListener("click", function() {
-  window.removeEventListener('beforeunload', beforeUnloadEvent);
-});
+// const submitButton = document.getElementById("submit-button");
+// submitButton.addEventListener("click", function() {
+//   window.removeEventListener('beforeunload', beforeUnloadEvent);
+// });

@@ -106,8 +106,8 @@ def instruction():
     elif request.method == "POST":
         return redirect(url_for('lottery'))
 
-LOTTERIES = 24    
-available_lotteries = list(range(1, MAX_LOTTERY))
+LOTTERIES = 25
+available_lotteries = list(range(1, MAX_LOTTERY+1))
 
 @app.route('/lottery', methods=['GET'])
 @app.route('/lottery/', methods=['GET'])
@@ -123,7 +123,6 @@ def lottery(lottery_num=1):
         rand = random.randint(0, LOTTERIES-1)
         lottery_num = available_lotteries.pop(rand)
         print("randon", rand)
-    
     LOTTERIES -= 1
     
     print("lottery_num", lottery_num)
