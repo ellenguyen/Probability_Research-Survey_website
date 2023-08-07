@@ -123,18 +123,18 @@ def lottery(lottery_num=1):
     if(len(available_lotteries) != 0):
         rand = random.randint(0, LOTTERIES-1)
         lottery_num = available_lotteries.pop(rand)
-        print("randon", rand)
+        #print("randon", rand)
     LOTTERIES -= 1
     
-    #print("lottery_num", lottery_num)
+    print("lottery_num", lottery_num)
     lottery_num = str(lottery_num)
 
     session['lottery_num'] = lottery_num
 
     #print("length", len(available_lotteries))
 
-    if len(available_lotteries) < 1:
-        lottery_num = 25
+    # if len(available_lotteries) < 1:
+    #     lottery_num = 25
 
 
     if request.method == "GET":
