@@ -117,8 +117,8 @@ def lottery(lottery_num=1):
     #Generate a list of all available lotteries
     global LOTTERIES
     
-    print(available_lotteries)
-    print(MAX_LOTTERY)
+    #print(available_lotteries)
+    #print(MAX_LOTTERY)
     #index so i can remove
     if(len(available_lotteries) != 0):
         rand = random.randint(0, LOTTERIES-1)
@@ -126,12 +126,12 @@ def lottery(lottery_num=1):
         print("randon", rand)
     LOTTERIES -= 1
     
-    print("lottery_num", lottery_num)
+    #print("lottery_num", lottery_num)
     lottery_num = str(lottery_num)
 
     session['lottery_num'] = lottery_num
 
-    print("length", len(available_lotteries))
+    #print("length", len(available_lotteries))
 
     if len(available_lotteries) < 1:
         lottery_num = 25
@@ -158,14 +158,14 @@ def user_choice():
 
     # lottery_num will be stored in the session as shown in the previous answer
     lottery_num = session.get('lottery_num')
-    print("this is the cur loltterry num", lottery_num)
+    #print("this is the cur loltterry num", lottery_num)
 
     ce = [lower_bound, upper_bound]
     user_id = session.get('user_id')
 
-    print(choices_one)
-    print(choices_two)
-    print(ce)
+    # print(choices_one)
+    # print(choices_two)
+    # print(ce)
     # Retrieve the current value of lottery_num from the session and add one
 
     #session['lottery_num'] = lottery_num
