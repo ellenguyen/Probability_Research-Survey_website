@@ -9,21 +9,7 @@ import yaml
 import random
 import os
 
-
 app = Flask(__name__)
-
-
-
-
-MAX_LOTTERY = 25
-DEBUG = False
-
-# more classes added upon instructions
-classes = [
-    "CIS 1001",
-    "STAT 1001",
-    "MATH 1001",
-]
 
 MAX_LOTTERY = 25
 DEBUG = False
@@ -60,13 +46,14 @@ def index():
             'university_year': request.form['university_year'],
             'taken_statistics': request.form['statistics'],
             'visualization': visualization,
+            'created_at': created_at,
         }
 
         cur = conn.cursor()
 
         insert_query = """
-                        INSERT INTO user_info (first_name, last_name, student_id, class, instructor, major, university_year, taken_statistics, visualization)
-                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING user_id
+                        INSERT INTO user_info (first_name, last_name, student_id, class, instructor, major, university_year, taken_statistics, visualization, created_at)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, CURRENT_TIMESTAMP) RETURNING user_id
                     """
         user_info = session['user_info']
 
@@ -80,6 +67,7 @@ def index():
             user_info['university_year'],
             user_info['taken_statistics'],
             user_info['visualization'],
+            user_info['created_at'],
         )       
         
         cur.execute(insert_query,data)
@@ -169,9 +157,9 @@ def user_choice():
 
     #session['lottery_num'] = lottery_num
 
-    insert_query = '''INSERT INTO lottery_response (user_id, lottery_num, first_round_response, second_round_response, ce)
-                VALUES (%s, %s, %s, %s, %s)'''
-    data = (user_id, lottery_num, choices_one, choices_two, ce)
+    insert_query = '''INSERT INTO lottery_response (user_id, lottery_num, first_round_response, second_round_response, ce, created_at)
+                VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP)'''
+    data = (user_id, lottery_num, choices_one, choices_two, ce, created_at)
 
     cur.execute(insert_query,data)
     # Commit the changes to the database
