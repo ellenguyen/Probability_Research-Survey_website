@@ -239,7 +239,7 @@ async function loadLottery(lotteryIndex, Index) {
   taskName.innerText = `TASK ${Index}:`
 
   const lotteryDescription = document.getElementById("lottery-description")
-  lotteryDescription.innerText = `You receive $${curLottery["high"]} with probability ${parseInt(curLottery["probability_high"] * 100)}% and $${curLottery["low"]} with probability ${parseInt((1 - curLottery["probability_high"]) * 100)}%.`
+  lotteryDescription.innerText = `You receive $${curLottery["high"]} with probability ${parseInt(curLottery["probability_high"] * 100)}% and $${curLottery["low"]} with probability ${parseInt((curLottery["probability_low"]) * 100)}%.`
 
   initializeLotteryTable(curLottery)
 }
