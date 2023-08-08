@@ -22,13 +22,25 @@ CREATE TABLE lottery_response (
     ce NUMERIC[]
 );
 
+--@block
+ALTER TABLE user_info
+ADD created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+
+ALTER TABLE lottery_response
+ADD created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+
+--@block
+UPDATE user_info
+SET created_at = created_at AT TIME ZONE 'UTC' AT TIME ZONE 'America/New_York';
+
+UPDATE lottery_response
+SET created_at = created_at AT TIME ZONE 'UTC' AT TIME ZONE 'America/New_York';
+
 -- @block
-SELECT u.user_id, u.first_name, u.last_name, u.student_id, u.class, u.instructor, u.major, u.university_year, u.taken_statistics, u.visualization,
-       lr.lottery_num, lr.first_round_response, lr.second_round_response, lr.ce
+SELECT u.user_id, u.first_name, u.last_name, u.student_id, u.class, u.instructor, u.major, u.university_year, u.taken_statistics, u.visualization, u.created_at,
+       lr.lottery_num, lr.first_round_response, lr.second_round_response, lr.ce, lr.created_at
 FROM user_info u
 JOIN lottery_response lr ON u.user_id = lr.user_id;
-
-
 
 -- @block
 SELECT * FROM users;
