@@ -11,7 +11,8 @@ import os
 
 app = Flask(__name__)
 
-
+app.secret_key = "f27ea7e7486e5286a72cc9699c59b303"
+conn = psycopg2.connect("postgresql://postgres:Play279265!!@db.jpippqfaehsfnslrdria.supabase.co:5432/postgres")
 
 
 MAX_LOTTERY = 25
@@ -22,6 +23,7 @@ classes = [
     "CIS 1001",
     "STAT 1001",
     "MATH 1001",
+    "NEITHER"
 ]
 
 @app.route("/", methods=['GET', 'POST'])
