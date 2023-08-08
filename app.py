@@ -9,21 +9,7 @@ import yaml
 import random
 import os
 
-
 app = Flask(__name__)
-
-
-
-
-MAX_LOTTERY = 25
-DEBUG = False
-
-# more classes added upon instructions
-classes = [
-    "CIS 1001",
-    "STAT 1001",
-    "MATH 1001",
-]
 
 MAX_LOTTERY = 25
 DEBUG = False
