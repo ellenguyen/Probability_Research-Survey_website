@@ -190,7 +190,7 @@ function initializeLotteryTable(curLottery) {
       }
 
 
-      window.location.href = `/lottery/${lotteryNum+1}`
+      window.location.href = `/lottery/${lotteryNum}`
       
     }
   
