@@ -26,7 +26,15 @@ classes = [
     "NEITHER"
 ]
 
-@app.route("/", methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
+def welcome():
+    if request.method == 'GET':
+        return render_template('welcome.html')  # Render the welcome pag
+    
+    if request.method == 'POST':
+        return redirect('/info')
+
+@app.route("/info", methods=['GET', 'POST'])
 def index():
     if DEBUG:
         session.clear()
@@ -86,7 +94,7 @@ def index():
             print(session['user_info'])
 
         return redirect('/instruction')
-        #return redirect('/lottery')
+
     
 @app.route('/instruction', methods=['GET', 'POST'])
 def instruction():
