@@ -115,24 +115,21 @@ def lottery(lottery_num=1):
     #Generate a list of all available lotteries
     global LOTTERIES
     
-    #print(available_lotteries)
+    print(available_lotteries)
     #print(MAX_LOTTERY)
     #index so i can remove
     if(len(available_lotteries) != 0):
         rand = random.randint(0, LOTTERIES-1)
         lottery_num = available_lotteries.pop(rand)
-        #print("randon", rand)
-    LOTTERIES -= 1
+        print("randon", rand)
+        LOTTERIES -= 1
+
+    
     
     print("lottery_num", lottery_num)
     lottery_num = str(lottery_num)
 
     session['lottery_num'] = lottery_num
-
-    #print("length", len(available_lotteries))
-
-    # if len(available_lotteries) < 1:
-    #     lottery_num = 25
 
 
     if request.method == "GET":
