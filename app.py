@@ -111,23 +111,30 @@ available_lotteries = list(range(1, MAX_LOTTERY+1))
 @app.route('/lottery', methods=['GET'])
 @app.route('/lottery/', methods=['GET'])
 @app.route('/lottery/<lottery_num>', methods=['GET', 'POST'])
-def lottery(lottery_num=1):
+def lottery(lottery_num=None):
     #Generate a list of all available lotteries
     global LOTTERIES
+    global available_lotteries
     
     print(available_lotteries)
 
     #print(MAX_LOTTERY)
     #index so i can remove
-    if(len(available_lotteries) != 0):
-        rand = random.randrange(0, LOTTERIES)
-        lottery_num = available_lotteries.pop(rand)
-        print("randon", rand)
-        LOTTERIES -= 1
+    # if(len(available_lotteries) != 0):
+    #     rand = random.randrange(0, LOTTERIES)
+    #     lottery_num = available_lotteries.pop(rand)
+    #     print("randon", rand)
+    #     LOTTERIES -= 1
+    if lottery_num is None:
+        if available_lotteries:
+            lottery_num = random.choice(available_lotteries)
+            available_lotteries.remove(lottery_num)
+        else:
+            return redirect(url_for('index'))  # No available lotteries
 
     
     
-    print("lottery_num", lottery_num)
+    # print("lottery_num", lottery_num)
     #lottery_num = str(lottery_num)
 
     session['lottery_num'] = lottery_num
