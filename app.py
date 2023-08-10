@@ -127,6 +127,11 @@ def lottery(lottery_num=None):
     #     LOTTERIES -= 1
     if lottery_num is None:
         if available_lotteries:
+            # Generate a unique seed for this request
+            seed = hash(f'{request.remote_addr}_{random.random()}')
+            random.seed(seed)
+            
+            # Generate a random lottery number
             lottery_num = random.choice(available_lotteries)
             available_lotteries.remove(lottery_num)
         else:
