@@ -128,7 +128,7 @@ def lottery(lottery_num=1):
     
     
     print("lottery_num", lottery_num)
-    lottery_num = str(lottery_num)
+    #lottery_num = str(lottery_num)
 
     session['lottery_num'] = lottery_num
 
