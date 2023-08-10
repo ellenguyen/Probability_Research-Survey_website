@@ -1,5 +1,6 @@
 # import libraries to redirect to different page layouts
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+import threading
 
 # install pip install Flask psycopg2-binary
 import psycopg2
@@ -107,10 +108,12 @@ def instruction():
 
 LOTTERIES = 25
 available_lotteries = list(range(1, MAX_LOTTERY+1))
+lottery_lock = threading.Lock()
+rng = random.Random()  # Centralized random number generator
 
 @app.route('/lottery', methods=['GET'])
 @app.route('/lottery/', methods=['GET'])
-@app.route('/lottery/<lottery_num>', methods=['GET', 'POST'])
+@app.route('/lottery/<int:lottery_num>', methods=['GET', 'POST'])
 def lottery(lottery_num=None):
     #Generate a list of all available lotteries
     global LOTTERIES
@@ -126,16 +129,12 @@ def lottery(lottery_num=None):
     #     print("randon", rand)
     #     LOTTERIES -= 1
     if lottery_num is None:
-        if available_lotteries:
-            # Generate a unique seed for this request
-            seed = hash(f'{request.remote_addr}_{random.random()}')
-            random.seed(seed)
-            
-            # Generate a random lottery number
-            lottery_num = random.choice(available_lotteries)
-            available_lotteries.remove(lottery_num)
-        else:
-            return redirect(url_for('index'))  # No available lotteries
+        with lottery_lock:
+            if available_lotteries:
+                lottery_num = rng.choice(available_lotteries)
+                available_lotteries.remove(lottery_num)
+            else:
+                return redirect(url_for('index'))   # No available lotteries
 
     
     
