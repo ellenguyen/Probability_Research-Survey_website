@@ -252,7 +252,7 @@ document.addEventListener("DOMContentLoaded", async function() {
 
   // Load the lottery with the current index
   //loadLottery(lotteryNum - 1, currentLotteryIndex);
-  loadLottery(lotteryNum - 1);
+  loadLottery(lotteryNum);
 
   // Save the current index + 1 for the next visit
   saveCurrentLotteryIndex(currentLotteryIndex+1);
