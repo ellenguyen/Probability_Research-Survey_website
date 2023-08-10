@@ -1,7 +1,7 @@
 # import libraries to redirect to different page layouts
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 import threading
-
+import uuid
 # install pip install Flask psycopg2-binary
 import psycopg2
 
@@ -129,12 +129,17 @@ def lottery(lottery_num=None):
     #     print("randon", rand)
     #     LOTTERIES -= 1
     if lottery_num is None:
-        with lottery_lock:
-            if available_lotteries:
-                lottery_num = rng.choice(available_lotteries)
+        if available_lotteries:
+            user_numbers = session.get('user_numbers', [])
+            available_numbers = [num for num in available_lotteries if num not in user_numbers]
+            
+            if available_numbers:
+                lottery_num = random.choice(available_numbers)
+                user_numbers.append(lottery_num)
+                session['user_numbers'] = user_numbers
                 available_lotteries.remove(lottery_num)
             else:
-                return redirect(url_for('index'))   # No available lotteries
+                return redirect(url_for('index'))    # No available lotteries
 
     
     
