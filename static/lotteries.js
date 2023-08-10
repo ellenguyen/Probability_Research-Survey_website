@@ -235,8 +235,8 @@ async function loadLottery(lotteryIndex, Index) {
   
   const taskName = document.getElementById("task-name")
   // TODO: fix task number
-  //taskName.innerText = `TASK ${lotteryIndex + 1}:`
-  taskName.innerText = `TASK ${Index}:`
+  taskName.innerText = `TASK ${lotteryIndex + 1}:`
+  //taskName.innerText = `TASK ${Index}:`
 
   const lotteryDescription = document.getElementById("lottery-description")
   lotteryDescription.innerText = `You receive $${curLottery["high"]} with probability ${parseInt(curLottery["probability_high"] * 100)}% and $${curLottery["low"]} with probability ${parseInt((curLottery["probability_low"]) * 100)}%.`
@@ -251,7 +251,8 @@ document.addEventListener("DOMContentLoaded", async function() {
   // alert(currentLotteryIndex);
 
   // Load the lottery with the current index
-  loadLottery(lotteryNum - 1, currentLotteryIndex);
+  //loadLottery(lotteryNum - 1, currentLotteryIndex);
+  loadLottery(lotteryNum - 1);
 
   // Save the current index + 1 for the next visit
   saveCurrentLotteryIndex(currentLotteryIndex+1);
