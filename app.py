@@ -108,13 +108,11 @@ def instruction():
 LOTTERIES = 25
 available_lotteries = list(range(1, MAX_LOTTERY+1))
 
-
 @app.route('/lottery', methods=['GET'])
 @app.route('/lottery/', methods=['GET'])
 @app.route('/lottery/<lottery_num>', methods=['GET', 'POST'])
 def lottery(lottery_num=1):
     #Generate a list of all available lotteries
-    global available_lotteries
     global LOTTERIES
     
     print(available_lotteries)
